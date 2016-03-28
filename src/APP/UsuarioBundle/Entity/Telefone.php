@@ -36,7 +36,7 @@ class Telefone
     private $whatzap;
     
      /**
-     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="telefone")
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="telefones")
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     

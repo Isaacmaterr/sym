@@ -9,3 +9,8 @@ usuario:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    
+UsuarioBundle:
+    resource: "@UsuarioBundle/Controller/"
+    prefix: /usuario
+    type:     annotation

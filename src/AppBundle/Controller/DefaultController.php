@@ -25,9 +25,14 @@ class DefaultController extends Controller
      */
     public function testeAction(Request $request)
     {
+        $user2 = $this->get('security.token_storage')->getToken()->getUser()->getTelefones();
+        foreach ($user2 as $value) {
+            var_dump($value->getUsuario()->getNome());
+        }
+       
         // replace this example code with whatever you need
         return $this->render('default/teste.html.twig', [
-           
+           'eu'=>'isaac',
         ]);
     }
     

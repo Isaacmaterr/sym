@@ -1,0 +1,59 @@
+       {% block stylesheets %}
+
+            {% stylesheets 
+        'bundles/empresa/web/global/open-sans/*'
+	'bundles/empresa/web/global/plugins/font-awesome/css/*'
+	'bundles/empresa/web/global/plugins/simple-line-icons/*'
+	'bundles/empresa/web/global/plugins/bootstrap/css/*'
+	'bundles/empresa/web/global/plugins/uniform/css/*'
+	'bundles/empresa/web/global/plugins/bootstrap-switch/css/*'
+        'bundles/empresa/web/global/css/*'
+	'bundles/empresa/web/global/css/*'
+	'bundles/empresa/web/admin/layout/css/*'
+	'bundles/empresa/web/admin/layout/css/themes/*'
+	'bundles/empresa/web/admin/layout/css/*'
+            
+            filter='cssrewrite'
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+
+        {% endblock %}
+        
+        
+        
+        
+        
+        {% block javascripts %}
+
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js">
+
+            {% javascripts 
+     
+        'bundles/empresa/web/global/plugins/*'
+     'bundles/empresa/web/global/plugins/jquery-ui/*'
+   'bundles/empresa/web/global/plugins/bootstrap/js/*'
+   'bundles/empresa/web/global/plugins/bootstrap-hover-dropdown/*'
+   'bundles/empresa/web/global/plugins/jquery-slimscroll/*'
+   'bundles/empresa/web/global/plugins/uniform/*'
+   'bundles/empresa/web/global/plugins/bootstrap-switch/js/*'
+    'bundles/empresa/web/global/scripts/*'
+   'bundles/empresa/web/admin/layout/scripts/*'
+   'bundles/empresa/web/admin/layout/scripts/*'
+   'bundles/empresa/web/admin/layout/scripts/'
+   
+            %}
+                <script src = "{{ asset_url }}" ></script>
+            {% endjavascripts %}
+
+
+        <script>
+                    jQuery(document).ready(function () {
+                
+                Metronic.init(); // init metronic core components
+                Layout.init(); // init current layout
+                QuickSidebar.init(); // init quick sidebar
+                Demo.init(); // init demo features
+            });
+        </script>
+    {% endblock %}

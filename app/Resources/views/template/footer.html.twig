@@ -1,0 +1,46 @@
+{% block footer %}
+    <div class="page-footer">
+        <div class="page-footer-inner">
+            2014 &copy; Metronic by keenthemes.
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>
+
+    {% block javascripts %}
+
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+        {% javascripts 
+     
+        'bundles/empresa/web/global/plugins/*'
+     'bundles/empresa/web/global/plugins/jquery-ui/*'
+   'bundles/empresa/web/global/plugins/bootstrap/js/*'
+   'bundles/empresa/web/global/plugins/bootstrap-hover-dropdown/*'
+   'bundles/empresa/web/global/plugins/jquery-slimscroll/*'
+   'bundles/empresa/web/global/plugins/uniform/*'
+   'bundles/empresa/web/global/plugins/bootstrap-switch/js/*'
+    'bundles/empresa/web/global/scripts/*'
+   'bundles/empresa/web/admin/layout/scripts/*'
+   
+   
+        %}
+        <script src = "{{ asset_url }}" ></script>
+        {% endjavascripts %}
+
+
+        <script>
+            jQuery(document).ready(function () {
+
+                Metronic.init(); // init metronic core components
+                Layout.init(); // init current layout
+                QuickSidebar.init(); // init quick sidebar
+                Demo.init(); // init demo features
+            });
+        </script>
+    {% endblock %}
+
+</body>
+</html>
+
+{%endblock%}

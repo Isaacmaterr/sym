@@ -3,7 +3,12 @@
 namespace APP\UsuarioBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
+use \Serializable;
 
 /**
  * Usuario
@@ -11,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="APP\UsuarioBundle\Repository\UsuarioRepository")
  */
-class Usuario {
+class Usuario implements AdvancedUserInterface, EquatableInterface{
 
     public function __construct() {
 
@@ -64,7 +69,7 @@ class Usuario {
     
     function getRoles() {
         $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
+      
         return array_unique($roles);
       
     }
@@ -102,7 +107,26 @@ class Usuario {
      * @ORM\Column(name="perfil", type="boolean")
      */
     private $perfil=1;
+    
+    
+    
+    function getStatus() {
+        return $this->status;
+    }
 
+    function getPerfil() {
+        return $this->perfil;
+    }
+
+    function setStatus($status) {
+        $this->status = $status;
+    }
+
+    function setPerfil($perfil) {
+        $this->perfil = $perfil;
+    }
+
+    
 
     function getEmpresa() {
         return $this->empresa;
@@ -201,4 +225,63 @@ class Usuario {
         return $this->email;
     }
 
+    public function eraseCredentials() {
+        
+    }
+
+    public function getUsername() {
+          return $this->email;
+    }
+
+  public function isEqualTo(UserInterface $user) {
+        return $this->getId() == $user->getId();
+    }
+
+    public function isAccountNonExpired() {
+        return true;
+    }
+
+    public function isAccountNonLocked() {
+        return true;
+    }
+
+    public function isCredentialsNonExpired() {
+        return true;
+    }
+
+
+    public function isEnabled() {
+        return $this->status;
+    }
+
+    
+
+
+    
+    
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->password,
+           
+        ));
+    }
+
+  public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+            
+        ) = unserialize($serialized);
+    }
+
+    
+    
+    
+    
+    
 }

@@ -9,6 +9,11 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+assetic:
+    debug: '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
 
 framework:
     #esi:             ~
@@ -33,6 +38,7 @@ framework:
     fragments:       ~
     http_method_override: true
     assets: ~
+        
 
 # Twig Configuration
 twig:
