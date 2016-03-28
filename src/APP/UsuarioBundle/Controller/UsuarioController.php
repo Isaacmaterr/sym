@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use APP\UsuarioBundle\Entity\Usuario;
 use APP\UsuarioBundle\Entity\Endereco;
 use APP\UsuarioBundle\Entity\Telefone;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Usuarios controller.
@@ -34,16 +35,21 @@ class UsuarioController extends Controller {
      * @Template()
      */
     public function cadastroAction(Request $request) {
+                $sec = $this->get('security.authorization_checker');
+
+        if (!$sec->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException("somente admin");
+        }
         $form = $this->createForm('APP\UsuarioBundle\Forms\UsuarioType');
         if ("POST" == $request->getMethod()) {
             $form->handleRequest($request);
             if ($form->isValid($form)) {
- 
+
 
                 $en = $this->getDoctrine()->getEntityManager();
                 $data = $form->getData();
                 var_dump($data);
- 
+
                 $endereco = new Endereco();
                 $endereco->setBairro($data['bairro'])
                         ->setCep($data['cep'])
@@ -59,8 +65,8 @@ class UsuarioController extends Controller {
                 $usuario->setEndereco($endereco);
                 $usuario->setPassword($this->encodePassword($usuario, $data['password']));
                 $en->persist($usuario);
-               
-                
+
+
                 foreach ($data['telefones'] as $tel) {
                     $telefone = new Telefone();
                     $telefone->setNumero($tel)
@@ -75,9 +81,9 @@ class UsuarioController extends Controller {
 
 
                 $en->flush();
-               
 
-die();
+
+                die();
                 $session->getFlashBag()->add('success', 'cadastrado com sucesso');
                 return $this->redirect($this->generateUrl('catalogo_index'));
             }
