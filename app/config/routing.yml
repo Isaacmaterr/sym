@@ -6,9 +6,7 @@ usuario:
     resource: "@UsuarioBundle/Resources/config/routing.yml"
     prefix:   /
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+
     
 UsuarioBundle:
     resource: "@UsuarioBundle/Controller/"

@@ -18,8 +18,8 @@ security:
                 login_path: /usuario/login
                 
             logout:
-                path: /logout
-                target: /catalogo
+                path: /usuario/logout
+                target: /usuario/login
         
             anonymous: ~
             # activate different ways to authenticate
@@ -32,4 +32,4 @@ security:
             
             
     access_control:
-        - { path: ^/teste, roles: ROLE_USER}
+        - { path: ^/usuario/admin/, roles: ROLE_ADMIN}

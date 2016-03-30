@@ -31,24 +31,24 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class UsuarioController extends Controller {
 
     /**
-     * @Route("/cadastro",name="cadastro_usuario")
+     * @Route("/admin/cadastro",name="cadastro_usuario")
      * @Template()
      */
     public function cadastroAction(Request $request) {
-                $sec = $this->get('security.authorization_checker');
+        $sec = $this->get('security.authorization_checker');
 
-        if (!$sec->isGranted('ROLE_ADMIN')) {
+       /* if (!$sec->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("somente admin");
-        }
+        }*/
         $form = $this->createForm('APP\UsuarioBundle\Forms\UsuarioType');
         if ("POST" == $request->getMethod()) {
             $form->handleRequest($request);
             if ($form->isValid($form)) {
-
+                $session = new Session();
 
                 $en = $this->getDoctrine()->getEntityManager();
                 $data = $form->getData();
-                var_dump($data);
+
 
                 $endereco = new Endereco();
                 $endereco->setBairro($data['bairro'])
@@ -83,9 +83,9 @@ class UsuarioController extends Controller {
                 $en->flush();
 
 
-                die();
+
                 $session->getFlashBag()->add('success', 'cadastrado com sucesso');
-                return $this->redirect($this->generateUrl('catalogo_index'));
+                return $this->redirect($this->generateUrl('painel_usuario'));
             }
         }
 
@@ -100,4 +100,23 @@ class UsuarioController extends Controller {
         return $encode->encodePassword($plainPassWord, $user->getSalt());
     }
 
+    /**
+     * 
+     * @Route("/painel",name="painel_usuario")
+     * @Template()
+     */
+     
+    public function painelAction() {
+        return [];
+    }
+
+     /**
+     *  
+     * @Route("/admin/painelAdmin",name="painel_admin")
+     * @Template()
+     */
+     public function painelAdmAction() {
+        return [];
+    }
+    
 }
