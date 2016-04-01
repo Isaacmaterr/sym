@@ -14,8 +14,7 @@
             <form action="{{ path('login') }}" method="post" class="login-form" novalidate="novalidate">
 
                 <h3 class="form-title">Login</h3>
-
-                {% if error %}
+                 {% if error %}
                     <div class="alert alert-danger ">
                         <button class="close" data-close="alert"></button>
                         <span>{{ error.messageKey|trans(error.messageData, 'security') }}</span>

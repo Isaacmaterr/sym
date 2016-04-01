@@ -4,12 +4,12 @@ namespace APP\EmpresaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Empresar
  *
  * @ORM\Table(name="empresar")
  * @ORM\Entity(repositoryClass="APP\EmpresaBundle\Repository\EmpresarRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Empresar {
 
@@ -51,20 +51,34 @@ class Empresar {
     private $logo;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255,unique=true)
+     */
+    private $slug;
+
+    /**
      * @ORM\OneToOne(targetEntity="APP\UsuarioBundle\Entity\Usuario", inversedBy="empresa")
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id",nullable=false)
      */
     private $usuario;
+
     /**
      * @ORM\OneToMany(targetEntity="Categoria", mappedBy="empresar")
      */
     private $categorias;
+
     /**
      * @ORM\OneToMany(targetEntity="Produtos", mappedBy="empresar")
      */
     private $produtos;
-    
-    
+
+    /** @ORM\PrePersist */
+    public function preCadastro() {
+
+        $this->slug = $this->nome;
+    }
+
     function getProdutos() {
         return $this->produtos;
     }
@@ -73,8 +87,6 @@ class Empresar {
         $this->produtos = $produtos;
     }
 
-        
-    
     function getCategorias() {
         return $this->categorias;
     }
@@ -83,7 +95,6 @@ class Empresar {
         $this->categorias = $categorias;
     }
 
-    
     function getUsuario() {
         return $this->usuario;
     }
@@ -187,6 +198,10 @@ class Empresar {
      */
     public function getLogo() {
         return $this->logo;
+    }
+
+    public function __toString() {
+        return $this->nome;
     }
 
 }

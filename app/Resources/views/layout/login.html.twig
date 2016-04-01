@@ -14,20 +14,9 @@
         <meta content="" name="author"/>
         {% block stylesheets %}
 
-            {% stylesheets 
-        'bundles/empresa/web/global/open-sans/*'
-	'bundles/empresa/web/global/plugins/font-awesome/css/*'
-	'bundles/empresa/web/global/plugins/simple-line-icons/*'
-	'bundles/empresa/web/global/plugins/bootstrap/css/*'
-	'bundles/empresa/web/global/plugins/uniform/css/*'
-	'bundles/empresa/web/global/plugins/bootstrap-switch/css/*'
-        'bundles/empresa/web/global/css/*'
-	'bundles/empresa/web/global/css/*'
-	'bundles/empresa/web/admin/layout/css/*'
-	'bundles/empresa/web/admin/layout/css/themes/*'
-	'bundles/empresa/web/admin/layout/css/*'
-            
-            filter='cssrewrite'
+            {% stylesheets  
+'bundles/empresa/web/css/*'
+  filter='cssrewrite'
             %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
@@ -40,88 +29,76 @@
         <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
         <div class="menu-toggler sidebar-toggler">
         </div>
-       {% block body %}
-        <div class="content">
-            <div class="col-md-offset-4 col-md-4 " style="background: antiquewhite;">
-                <div class="logo">
-                    <a href="index.html">
-                        <img src="../../assets/admin/layout/img/logo-big.png" alt="">
-                    </a>
-                </div>
-                <!-- BEGIN LOGIN FORM -->
-                <form class="login-form" action="index.html" method="post" novalidate="novalidate">
-                    <h3 class="form-title">Sign In</h3>
-                    <div class="alert alert-danger display-hide">
-                        <button class="close" data-close="alert"></button>
-                        <span>
-                            Enter any username and password. </span>
+        {% block body %}
+            <div class="content">
+                <div class="col-md-offset-4 col-md-4 " style="background: antiquewhite;">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="../../assets/admin/layout/img/logo-big.png" alt="">
+                        </a>
                     </div>
-                    <div class="form-group">
-                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                        <label class="control-label visible-ie8 visible-ie9">Username</label>
-                        <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label visible-ie8 visible-ie9">Password</label>
-                        <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password">
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-success uppercase">Login</button>
-                    </div>
-                    <div class="create-account">
-                        <p>
-                            <a href="javascript:;" id="register-btn" class="uppercase">Create an account</a>
-                        </p>
-                    </div>
-                </form>
+                    <!-- BEGIN LOGIN FORM -->
+                    <form class="login-form" action="index.html" method="post" novalidate="novalidate">
+                        <h3 class="form-title">Sign In</h3>
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            <span>
+                                Enter any username and password. </span>
+                        </div>
+                        <div class="form-group">
+                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                            <label class="control-label visible-ie8 visible-ie9">Username</label>
+                            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label visible-ie8 visible-ie9">Password</label>
+                            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success uppercase">Login</button>
+                        </div>
+                        <div class="create-account">
+                            <p>
+                                <a href="javascript:;" id="register-btn" class="uppercase">Create an account</a>
+                            </p>
+                        </div>
+                    </form>
 
 
 
-                <div class="copyright">
-                    2014 © Metronic. Admin Dashboard Template.
+                    <div class="copyright">
+                        2014 © Metronic. Admin Dashboard Template.
+                    </div>
                 </div>
             </div>
-            </div>
-           {% endblock %}
-            <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+        {% endblock %}
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 
-            {% block javascripts %}
-
+        {% block javascripts %}
 
 
-                {% javascripts 
-     
-    'bundles/empresa/web/global/plugins/*'
-   'bundles/empresa/web/global/plugins/jquery-ui/*'
-   'bundles/empresa/web/global/plugins/bootstrap/js/*'
-   'bundles/empresa/web/global/plugins/bootstrap-hover-dropdown/*'
-   'bundles/empresa/web/global/plugins/jquery-slimscroll/*'
-   'bundles/empresa/web/global/plugins/uniform/*'
-   'bundles/empresa/web/global/plugins/bootstrap-switch/js/*'
-   'bundles/empresa/web/global/scripts/*'
-   'bundles/empresa/web/admin/layout/scripts/*'
-   
 
-   
-                %}
-                <script src = "{{ asset_url }}" ></script>
-                {% endjavascripts %}
+            {% javascripts 
+      'bundles/empresa/web/js/*'
+            %}
+            <script src = "{{ asset_url }}" ></script>
+            {% endjavascripts %}
 
 
-                <script>
-                    jQuery(document).ready(function () {
+            <script>
+                jQuery(document).ready(function () {
 
-                        Metronic.init(); // init metronic core components
-                        Layout.init(); // init current layout
-                        QuickSidebar.init(); // init quick sidebar
-                        Demo.init(); // init demo features
-                    });
-                </script>
-            {% endblock %}
+                    Metronic.init(); // init metronic core components
+                    Layout.init(); // init current layout
+                    QuickSidebar.init(); // init quick sidebar
+                    Demo.init(); // init demo features
+                });
+            </script>
+        {% endblock %}
 
-            <!-- END JAVASCRIPTS -->
+        <!-- END JAVASCRIPTS -->
 
-            <!-- END BODY -->
+        <!-- END BODY -->
     </body>
     <!-- END BODY -->
 </html>

@@ -102,7 +102,7 @@ class UsuarioController extends Controller {
 
     /**
      * 
-     * @Route("/painel",name="painel_usuario")
+     * @Route("/usuario/painel",name="painel_usuario")
      * @Template()
      */
      

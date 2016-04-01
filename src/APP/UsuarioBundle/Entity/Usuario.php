@@ -281,7 +281,9 @@ class Usuario implements AdvancedUserInterface, EquatableInterface{
 
     
     
-    
+   public function __toString() {
+    return $this->email;
+} 
     
     
 }

@@ -1,1 +1,13 @@
+empresa_empresar:
+    resource: "@EmpresaBundle/Resources/config/routing/empresar.yml"
+    prefix:   /empresar
+
+empresa_produtos:
+    resource: "@EmpresaBundle/Resources/config/routing/produtos.yml"
+    prefix:   /produtos
+
+
+empresa_categoria:
+    resource: "@EmpresaBundle/Resources/config/routing/categoria.yml"
+    prefix:   /categoria
 

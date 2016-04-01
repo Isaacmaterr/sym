@@ -142,5 +142,7 @@ class Categoria {
     public function getStatus() {
         return $this->status;
     }
-
+  public function __toString() {
+        return $this->nome;
+    }
 }

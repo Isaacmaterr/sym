@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="produtos")
  * @ORM\Entity(repositoryClass="APP\EmpresaBundle\Repository\ProdutosRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Produtos
 {
@@ -41,7 +42,19 @@ class Produtos
      * @ORM\Column(name="descricao", type="string", length=255)
      */
     private $descricao;
+    
+  
 
+        private $imagens;
+    function getImagens() {
+        return $this->imagens;
+    }
+
+    function setImagens($imagens) {
+        $this->imagens = $imagens;
+    }
+
+    
     /**
      * @var int
      *
@@ -74,7 +87,10 @@ class Produtos
      * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="produtos")
      * @ORM\JoinColumn(name="categoria_produto_id", referencedColumnName="id",nullable=false)
      */
-    
+      /** @ORM\PrePersist */
+    public function preCadastro() {
+          $this->dataCadastro = new \DateTime("now");
+    }
     private $categoria;
     function getEmpresar() {
         return $this->empresar;
