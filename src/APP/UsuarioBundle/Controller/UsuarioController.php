@@ -37,9 +37,9 @@ class UsuarioController extends Controller {
     public function cadastroAction(Request $request) {
         $sec = $this->get('security.authorization_checker');
 
-       /* if (!$sec->isGranted('ROLE_ADMIN')) {
+        if (!$sec->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("somente admin");
-        }*/
+        }
         $form = $this->createForm('APP\UsuarioBundle\Forms\UsuarioType');
         if ("POST" == $request->getMethod()) {
             $form->handleRequest($request);
@@ -85,7 +85,7 @@ class UsuarioController extends Controller {
 
 
                 $session->getFlashBag()->add('success', 'cadastrado com sucesso');
-                return $this->redirect($this->generateUrl('painel_usuario'));
+                return $this->redirect($this->generateUrl('painel_admin'));
             }
         }
 

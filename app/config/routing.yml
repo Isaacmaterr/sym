@@ -11,4 +11,4 @@ usuario:
 UsuarioBundle:
     resource: "@UsuarioBundle/Controller/"
     prefix: /usuario
-    type:     annotation
+    type:   annotation

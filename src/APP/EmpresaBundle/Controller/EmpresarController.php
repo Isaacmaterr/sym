@@ -109,9 +109,10 @@ class EmpresarController extends Controller
  
        }
         $Form->handleRequest($request);
-
+       
         if ($Form->isSubmitted() && $Form->isValid()) {
             $dadosEmpresar = $Form->getData();
+            
             $usuario =  $this->get('security.token_storage')->getToken()->getUser();
             $dadosEmpresar->setUsuario($usuario);
             

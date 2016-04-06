@@ -1,20 +1,20 @@
 empresar_index:
-    path:     /
+    path:     admin/
     defaults: { _controller: "EmpresaBundle:Empresar:index" }
     methods:  GET
 
 empresar_show:
-    path:     /{id}/show
+    path:     admin/{id}/show
     defaults: { _controller: "EmpresaBundle:Empresar:show" }
     methods:  GET
 
 empresar_new:
-    path:     /new
+    path:     admin/new
     defaults: { _controller: "EmpresaBundle:Empresar:new" }
     methods:  [GET, POST]
 
 empresar_edit:
-    path:     /{id}/edit
+    path:     admin/{id}/edit
     defaults: { _controller: "EmpresaBundle:Empresar:edit" }
     methods:  [GET, POST]
 
@@ -26,6 +26,6 @@ empresar_minha:
 
 
 empresar_delete:
-    path:     /{id}/delete
+    path:     admin/{id}/delete
     defaults: { _controller: "EmpresaBundle:Empresar:delete" }
     methods:  DELETE

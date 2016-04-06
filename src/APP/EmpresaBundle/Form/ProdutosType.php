@@ -5,6 +5,16 @@ namespace APP\EmpresaBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+
+use Doctrine\ORM\EntityRepository;
+
+
 
 
 class ProdutosType extends AbstractType
@@ -15,15 +25,27 @@ class ProdutosType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $empresar=$options['data']['empresar'];
+       
         $builder
             ->add('nome')
             ->add('valor')
-            ->add('descricao')
-            ->add('quantidade')
-            ->add('status')
-            ->add('dataCadastro')
-            ->add('empresar')
-            ->add('categoria')
+            ->add('descricao',TextareaType::class)
+            ->add('quantidade',NumberType::class)
+            ->add('filePrincipal',FileType::class)
+            ->add('fileMult',FileType::class,['multiple'=>true])
+            ->add('salvar',SubmitType::class)
+            ->add('categoria',EntityType::class, [
+                     'placeholder' => 'Escolha uma categoria',
+                    'empty_data'=>null,
+                    'class' => 'EmpresaBundle:Categoria',
+                    'query_builder' => function (EntityRepository $er) use ($empresar) {
+                        return $er->createQueryBuilder('u')
+                                ->where('u.status=1')
+                                 ->andWhere(' u.empresar=:empresar')
+                                ->setParameter('empresar', $empresar)
+                                ->orderBy('u.nome', 'ASC');
+                    }])
         ;
     }
     
@@ -33,7 +55,7 @@ class ProdutosType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'APP\EmpresaBundle\Entity\Produtos'
+            'data_class' => null
         ));
     }
 }

@@ -10,6 +10,16 @@ use Doctrine\ORM\EntityRepository;
 
 class CategoriaType extends AbstractType {
 
+    private $empresar;
+
+    function getEmpresar() {
+        return $this->empresar;
+    }
+
+    function setEmpresar($empresar) {
+        $this->empresar = $empresar;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -20,13 +30,13 @@ class CategoriaType extends AbstractType {
         $builder
                 ->add('nome')
                 ->add('pai', EntityType::class, [
-                      'placeholder' => 'Choose your gender',
-                    'empty_data'=>null,
+                    'placeholder' => 'Choose your gender',
+                    'empty_data' => null,
                     'class' => 'EmpresaBundle:Categoria',
                     'query_builder' => function (EntityRepository $er) use ($empresar) {
                         return $er->createQueryBuilder('u')
                                 ->where('u.status=1')
-                                 ->andWhere(' u.empresar=:empresar')
+                                ->andWhere(' u.empresar=:empresar')
                                 ->setParameter('empresar', $empresar)
                                 ->orderBy('u.nome', 'ASC');
                     }]);

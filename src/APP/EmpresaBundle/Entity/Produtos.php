@@ -11,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="APP\EmpresaBundle\Repository\ProdutosRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Produtos
-{
+class Produtos {
+
     /**
      * @var int
      *
@@ -42,10 +42,8 @@ class Produtos
      * @ORM\Column(name="descricao", type="string", length=255)
      */
     private $descricao;
-    
-  
+    private $imagens;
 
-        private $imagens;
     function getImagens() {
         return $this->imagens;
     }
@@ -54,7 +52,6 @@ class Produtos
         $this->imagens = $imagens;
     }
 
-    
     /**
      * @var int
      *
@@ -67,7 +64,7 @@ class Produtos
      *
      * @ORM\Column(name="status", type="boolean")
      */
-    private $status;
+    private $status = 1;
 
     /**
      * @var \DateTime
@@ -75,23 +72,43 @@ class Produtos
      * @ORM\Column(name="data_cadastro", type="datetime")
      */
     private $dataCadastro;
-    
-     /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="Empresar", inversedBy="produtos")
      * @ORM\JoinColumn(name="empresar_produto_id", referencedColumnName="id",nullable=false)
      */
-    
     private $empresar;
-    
-     /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="produtos")
      * @ORM\JoinColumn(name="categoria_produto_id", referencedColumnName="id",nullable=false)
      */
-      /** @ORM\PrePersist */
-    public function preCadastro() {
-          $this->dataCadastro = new \DateTime("now");
-    }
     private $categoria;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Fotos", mappedBy="produto")
+     */
+    private $fotos;
+    
+    
+    
+    /** @ORM\PrePersist */
+    public function preCadastro() {
+        $this->dataCadastro = new \DateTime("now");
+    }
+    
+    
+    function getFotos() {
+        return $this->fotos;
+    }
+
+    function setFotos($fotos) {
+        $this->fotos = $fotos;
+    }
+
+    
+    
+
     function getEmpresar() {
         return $this->empresar;
     }
@@ -108,14 +125,12 @@ class Produtos
         $this->categoria = $categoria;
     }
 
-    
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -126,8 +141,7 @@ class Produtos
      *
      * @return Produtos
      */
-    public function setNome($nome)
-    {
+    public function setNome($nome) {
         $this->nome = $nome;
 
         return $this;
@@ -138,8 +152,7 @@ class Produtos
      *
      * @return string
      */
-    public function getNome()
-    {
+    public function getNome() {
         return $this->nome;
     }
 
@@ -150,8 +163,7 @@ class Produtos
      *
      * @return Produtos
      */
-    public function setValor($valor)
-    {
+    public function setValor($valor) {
         $this->valor = $valor;
 
         return $this;
@@ -162,8 +174,7 @@ class Produtos
      *
      * @return string
      */
-    public function getValor()
-    {
+    public function getValor() {
         return $this->valor;
     }
 
@@ -174,8 +185,7 @@ class Produtos
      *
      * @return Produtos
      */
-    public function setDescricao($descricao)
-    {
+    public function setDescricao($descricao) {
         $this->descricao = $descricao;
 
         return $this;
@@ -186,8 +196,7 @@ class Produtos
      *
      * @return string
      */
-    public function getDescricao()
-    {
+    public function getDescricao() {
         return $this->descricao;
     }
 
@@ -198,8 +207,7 @@ class Produtos
      *
      * @return Produtos
      */
-    public function setQuantidade($quantidade)
-    {
+    public function setQuantidade($quantidade) {
         $this->quantidade = $quantidade;
 
         return $this;
@@ -210,8 +218,7 @@ class Produtos
      *
      * @return int
      */
-    public function getQuantidade()
-    {
+    public function getQuantidade() {
         return $this->quantidade;
     }
 
@@ -222,8 +229,7 @@ class Produtos
      *
      * @return Produtos
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -234,8 +240,7 @@ class Produtos
      *
      * @return bool
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -246,8 +251,7 @@ class Produtos
      *
      * @return Produtos
      */
-    public function setDataCadastro($dataCadastro)
-    {
+    public function setDataCadastro($dataCadastro) {
         $this->dataCadastro = $dataCadastro;
 
         return $this;
@@ -258,9 +262,8 @@ class Produtos
      *
      * @return \DateTime
      */
-    public function getDataCadastro()
-    {
+    public function getDataCadastro() {
         return $this->dataCadastro;
     }
-}
 
+}

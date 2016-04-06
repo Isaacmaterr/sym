@@ -2,49 +2,37 @@
 
 
 {% block body %}
-    <h1>Produtos list</h1>
+    <div class="bs-example" data-example-id="thumbnails-with-custom-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class=" col-md-3  col-md-offset-9">
+                    <a href="{{ path('produtos_new')}}" class="btn green">Cadastro de produtos</a>
+                </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>Valor</th>
-                <th>Descricao</th>
-                <th>Quantidade</th>
-                <th>Status</th>
-                <th>Datacadastro</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produto in produtos %}
-            <tr>
-                <td><a href="{{ path('produtos_show', { 'id': produto.id }) }}">{{ produto.id }}</a></td>
-                <td>{{ produto.nome }}</td>
-                <td>{{ produto.valor }}</td>
-                <td>{{ produto.descricao }}</td>
-                <td>{{ produto.quantidade }}</td>
-                <td>{% if produto.status %}Yes{% else %}No{% endif %}</td>
-                <td>{% if produto.dataCadastro %}{{ produto.dataCadastro|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('produtos_show', { 'id': produto.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('produtos_edit', { 'id': produto.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('produtos_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+            </div>
+
+        </div>
+
+        <div class="row"> 
+            {% for produto in produtos %}
+                <div class="col-sm-4 col-md-3"> 
+                    <div class="thumbnail"> 
+                        <img data-src="holder.js/100%x200" alt="100%x200" src="{{asset('uploads/produtos/'~produto.fotos.0.arquivo)}}" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;"> 
+                        <div class="caption"> 
+                            <h3>{{ produto.nome }}</h3> 
+                            <p>{{ produto.valor }}</p>
+                            <p>{{ produto.quantidade }}</p>
+                            <p> {% if produto.status %}Ativo{% else %}Inativo{% endif %} </p>
+                            <p>{% if produto.dataCadastro %}{{ produto.dataCadastro|date('Y-m-d H:i:s') }}{% endif %}</p>
+                            <p>
+                                <a href="{{ path('produtos_show', { 'id': produto.id }) }}" class="btn btn-primary" role="button">Show</a> 
+                                <a href="{{ path('produtos_edit', { 'id': produto.id }) }}" class="btn btn-default" role="button">Edit</a>
+                            </p> 
+                        </div> 
+                    </div> 
+                </div> 
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

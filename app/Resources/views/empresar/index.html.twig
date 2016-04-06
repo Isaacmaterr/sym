@@ -1,45 +1,62 @@
 {% extends '::/layout/usuario.html.twig' %}
 
 {% block body %}
-    <h1>Empresar list</h1>
+  <div class="portlet">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-bell-o"></i>Empresas
+        </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>Descricao</th>
-                <th>Cnpj</th>
-                <th>Logo</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for empresar in empresars %}
-            <tr>
-                <td><a href="{{ path('empresar_show', { 'id': empresar.id }) }}">{{ empresar.id }}</a></td>
-                <td>{{ empresar.nome }}</td>
-                <td>{{ empresar.descricao }}</td>
-                <td>{{ empresar.cnpj }}</td>
-                <td>{{ empresar.logo }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('empresar_show', { 'id': empresar.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('empresar_edit', { 'id': empresar.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-briefcase"></i> Nome
+                        </th>
+                        <th>
+                            <i class="fa fa-briefcase"></i> Nome
+                        </th>
+                        <th class="hidden-xs">
+                            <i class="fa fa-user"></i> Cnpj
+                        </th>
 
-    <ul>
-        <li>
-            <a href="{{ path('empresar_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empresar in empresars %}
+                        <tr>
+                             <td class="highlight">
+                                <div class="success">
+                                </div>
+                                <a href="#">
+                                    {{ empresar.usuario.nome }} </a>
+                            </td>
+                            <td class="highlight">
+                                <div class="success">
+                                </div>
+                                <a href="#">
+                                    {{ empresar.nome }} </a>
+                            </td>
+                            <td class="hidden-xs">
+                                {{ empresar.cnpj }}
+                            </td>
+                            <td>
+                                <a href="{{ path('empresar_edit', { 'id': empresar.id }) }}" class="btn default btn-xs purple">
+                                    <i class="fa fa-edit"></i> Edit </a>
+
+                                <a href="{{ path('empresar_show', { 'id': empresar.id }) }}" class="btn default btn-xs purple">
+                                    <i class="fa fa-edit"></i> show </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

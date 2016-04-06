@@ -2,41 +2,54 @@
 
 
 {% block body %}
-    <h1>Categoria list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for categorium in categorias %}
-            <tr>
-                <td><a href="{{ path('categoria_show', { 'id': categorium.id }) }}">{{ categorium.id }}</a></td>
-                <td>{{ categorium.nome }}</td>
-                <td>{% if categorium.status %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('categoria_show', { 'id': categorium.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('categoria_edit', { 'id': categorium.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('categoria_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+ <div class="portlet">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-bell-o"></i>Categoria
+        </div>
+       </div>
+    <div class="portlet-body">
+        <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-briefcase"></i>Nome
+                        </th>
+                        <th class="hidden-xs">
+                            <i class="fa fa-user"></i>Status
+                        </th>
+                        <th>
+                            <i class="fa fa-shopping-cart"></i> Ações
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for categorium in categorias %}
+                    <tr>
+                        <td class="highlight">
+                            <div class="success">
+                            </div>
+                            <a href="#">
+                               {{ categorium.nome }} </a>
+                        </td>
+                        <td class="hidden-xs">
+                           {% if categorium.status %}Ativo{% else %}Inativo{% endif %}
+                        </td>
+                       
+                        <td>
+                            <a href="{{ path('categoria_edit', { 'id': categorium.id }) }}" class="btn default btn-xs purple">
+                                <i class="fa fa-edit"></i> Edit </a>
+                                 <a href="{{ path('categoria_show', { 'id': categorium.id }) }}" class="btn default btn-xs purple">
+                                <i class="fa fa-edit"></i> show </a>
+                        </td>
+                    </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
