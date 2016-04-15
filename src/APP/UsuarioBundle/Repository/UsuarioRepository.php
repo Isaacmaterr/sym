@@ -22,7 +22,7 @@ class UsuarioRepository extends EntityRepository implements UserLoaderInterface
     public function buscarporUserorEmail($user){
         return  $this->createQueryBuilder('u')
                 ->where('u.email=:email')
-                 ->setParameter('email', $user)
+                ->setParameter('email', $user)
                 ->getQuery()
                 ->getOneOrNullResult();
     }

@@ -25,11 +25,13 @@ class CategoriaType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-
-        $empresar = $options['data']['empresar'];
+        
+        $empresar = $options['data']->getEmpresar();
+    
         $builder
                 ->add('nome')
                 ->add('pai', EntityType::class, [
+                    'required'=> false,
                     'placeholder' => 'Choose your gender',
                     'empty_data' => null,
                     'class' => 'EmpresaBundle:Categoria',
@@ -47,7 +49,7 @@ class CategoriaType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => null
+            'data_class' =>'APP\EmpresaBundle\Entity\Categoria'
         ));
     }
 

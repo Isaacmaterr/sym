@@ -25,15 +25,15 @@ class ProdutosType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $empresar=$options['data']['empresar'];
+        $empresar=$options['data']->getEmpresar();
        
         $builder
             ->add('nome')
             ->add('valor')
             ->add('descricao',TextareaType::class)
             ->add('quantidade',NumberType::class)
-            ->add('filePrincipal',FileType::class)
-            ->add('fileMult',FileType::class,['multiple'=>true])
+            ->add('filePrincipal',FileType::class,['mapped'=>false])
+            ->add('fileMult',FileType::class,['mapped'=>false,'multiple'=>true])
             ->add('salvar',SubmitType::class)
             ->add('categoria',EntityType::class, [
                      'placeholder' => 'Escolha uma categoria',
@@ -55,7 +55,7 @@ class ProdutosType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => null
+            'data_class' => 'APP\EmpresaBundle\Entity\Produtos'
         ));
     }
 }

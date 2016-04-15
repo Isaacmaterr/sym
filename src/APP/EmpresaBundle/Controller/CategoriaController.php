@@ -4,28 +4,25 @@ namespace APP\EmpresaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use APP\EmpresaBundle\Entity\Categoria;
-
 
 /**
  * Categoria controller.
  *
  */
-class CategoriaController extends Controller
-{
+class CategoriaController extends Controller {
+
     /**
      * Lists all Categoria entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-
-        $categorias = $em->getRepository('EmpresaBundle:Categoria')->findAll();
+        $empresaid = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa()->getId();
+        $categorias = $em->getRepository('EmpresaBundle:Categoria')->findBy(['empresar'=>$empresaid]);
 
         return $this->render('categoria/index.html.twig', array(
-            'categorias' => $categorias,
+                    'categorias' => $categorias,
         ));
     }
 
@@ -33,22 +30,20 @@ class CategoriaController extends Controller
      * Creates a new Categoria entity.
      *
      */
-    public function newAction(Request $request)
-    {
-                    $empresaid =  $this->get('security.token_storage')->getToken()->getUser()->getEmpresa()->getId();
-
-        $form = $this->createForm('APP\EmpresaBundle\Form\CategoriaType',['empresar'=>$empresaid]);
+    public function newAction(Request $request) {
+        $empresaid = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa()->getId();
+        $categoria = new Categoria();
+        $categoria->setEmpresar($empresaid);
+        $form = $this->createForm('APP\EmpresaBundle\Form\CategoriaType', $categoria);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoria = new Categoria();
-            $data = $form->getData();
-            
-          
-            $empresa =  $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+         
+            $categoria = $form->getData();
+
+
+            $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
             $categoria->setEmpresar($empresa);
-            $categoria->setNome($data['nome']);
-            $categoria->setPai($data['pai']);
             $em = $this->getDoctrine()->getManager();
             $em->persist($categoria);
             $em->flush();
@@ -57,8 +52,7 @@ class CategoriaController extends Controller
         }
 
         return $this->render('categoria/new.html.twig', array(
-          
-            'form' => $form->createView(),
+                    'form' => $form->createView(),
         ));
     }
 
@@ -66,13 +60,12 @@ class CategoriaController extends Controller
      * Finds and displays a Categoria entity.
      *
      */
-    public function showAction(Categoria $categorium)
-    {
+    public function showAction(Categoria $categorium) {
         $deleteForm = $this->createDeleteForm($categorium);
 
         return $this->render('categoria/show.html.twig', array(
-            'categorium' => $categorium,
-            'delete_form' => $deleteForm->createView(),
+                    'categorium' => $categorium,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -80,8 +73,7 @@ class CategoriaController extends Controller
      * Displays a form to edit an existing Categoria entity.
      *
      */
-    public function editAction(Request $request, Categoria $categorium)
-    {
+    public function editAction(Request $request, Categoria $categorium) {
         $deleteForm = $this->createDeleteForm($categorium);
         $editForm = $this->createForm('APP\EmpresaBundle\Form\CategoriaType', $categorium);
         $editForm->handleRequest($request);
@@ -95,9 +87,9 @@ class CategoriaController extends Controller
         }
 
         return $this->render('categoria/edit.html.twig', array(
-            'categorium' => $categorium,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'categorium' => $categorium,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -105,8 +97,7 @@ class CategoriaController extends Controller
      * Deletes a Categoria entity.
      *
      */
-    public function deleteAction(Request $request, Categoria $categorium)
-    {
+    public function deleteAction(Request $request, Categoria $categorium) {
         $form = $this->createDeleteForm($categorium);
         $form->handleRequest($request);
 
@@ -126,12 +117,12 @@ class CategoriaController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Categoria $categorium)
-    {
+    private function createDeleteForm(Categoria $categorium) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('categoria_delete', array('id' => $categorium->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
+                        ->setAction($this->generateUrl('categoria_delete', array('id' => $categorium->getId())))
+                        ->setMethod('DELETE')
+                        ->getForm()
         ;
     }
+
 }

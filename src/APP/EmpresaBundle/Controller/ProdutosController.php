@@ -21,8 +21,9 @@ class ProdutosController extends Controller {
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-
-        $produtos = $em->getRepository('EmpresaBundle:Produtos')->findAll();
+         $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+      
+        $produtos = $em->getRepository('EmpresaBundle:Produtos')->findBy(['empresar'=>$empresar->getId()]);
      
      
       //  exit();
@@ -37,27 +38,20 @@ class ProdutosController extends Controller {
      */
     public function newAction(Request $request) {
         $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
-
-        $form = $this->createForm('APP\EmpresaBundle\Form\ProdutosType', ['empresar' => $empresar]);
+        $produto = new Produtos();
+        $produto->setEmpresar($empresar);
+        $form = $this->createForm('APP\EmpresaBundle\Form\ProdutosType',$produto);
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            $produto = $form->getData();
 
+         
+            
+            
 
-
-            $produto = new Produtos();
-            $produto
-                    ->setNome($data['nome'])
-                    ->setDescricao($data['descricao'])
-                    ->setQuantidade($data['quantidade'])
-                    ->setValor($data['valor'])
-                    ->setCategoria($data['categoria']);
-
-            $produto->setEmpresar($data['categoria']->getEmpresar());
-
-
-
+            $produto->setEmpresar($produto->getCategoria()->getEmpresar());
             $em = $this->getDoctrine()->getManager();
             $em->persist($produto);
 
@@ -66,12 +60,12 @@ class ProdutosController extends Controller {
 
             $foto->setPrincipal(1)
                  ->setProduto($produto);
-            $foto->setFile($data['filePrincipal']);
+            $foto->setFile($form->get("filePrincipal")->getData());
             $em->persist($foto);
             
             $foto->upload();
             
-            foreach ($data['fileMult'] as $value) {
+            foreach ($form->get("fileMult")->getData() as $value) {
                  $foto = new Fotos();
 
             $foto->setPrincipal(0)
@@ -126,7 +120,7 @@ class ProdutosController extends Controller {
 
         return $this->render('produtos/edit.html.twig', array(
                     'produto' => $produto,
-                    'edit_form' => $editForm->createView(),
+                    'form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
     }
