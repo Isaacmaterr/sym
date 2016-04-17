@@ -5,6 +5,7 @@ namespace APP\EmpresaBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use APP\EmpresaBundle\Entity\Categoria;
+use Symfony\Component\Debug\Debug;
 
 /**
  * Categoria controller.
@@ -16,13 +17,25 @@ class CategoriaController extends Controller {
      * Lists all Categoria entities.
      *
      */
-    public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
+    public function indexAction(Request $request) {
         $empresaid = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa()->getId();
-        $categorias = $em->getRepository('EmpresaBundle:Categoria')->findBy(['empresar'=>$empresaid]);
 
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT a FROM EmpresaBundle:Categoria a where a.empresar = :empresar";
+        $query = $em->createQuery($dql);
+        $query->setParameter('empresar', $empresaid);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $query, /* query NOT result */ 
+                $request->query->getInt('page', 1)/* page number */,
+                2/* limit per page */
+        );
+       
+
+        /** $em2 = $this->getDoctrine()->getManager();
+          $categorias = $em2->getRepository('EmpresaBundle:Categoria')->findBy(['empresar' => $empresaid]);* */
         return $this->render('categoria/index.html.twig', array(
-                    'categorias' => $categorias,
+                    'pagination' => $pagination,
         ));
     }
 
@@ -38,7 +51,7 @@ class CategoriaController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-         
+
             $categoria = $form->getData();
 
 

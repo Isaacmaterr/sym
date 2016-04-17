@@ -16,9 +16,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn green">
+                                <a id="sample_editable_1_new"  href="{{path('categoria_new')}}" class="btn green">
                                     Add New <i class="fa fa-plus"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -32,11 +32,12 @@
                                 <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="
                                                    Username
                                                    : activate to sort column ascending" style="width: 179px;">
-                                        nome
+                                       {{ knp_pagination_sortable(pagination, 'Nome', 'a.nome') }}
                                     </th><th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
                                              Notes
                                              : activate to sort column ascending" style="width: 156px;">
-                                        Status
+                                        {{ knp_pagination_sortable(pagination, 'Status', 'a.Status') }}
+                                       
                                     </th><th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
                                              Edit
                                              : activate to sort column ascending" style="width: 86px;">
@@ -44,7 +45,7 @@
                                     </th></tr>
                             </thead>
                             <tbody>
-                                {% for categorium in categorias %}
+                                {% for categorium in pagination %}
                                     <tr>
                                         <td class="highlight">
                                             <div class="success">
@@ -70,7 +71,18 @@
 
 
                             </tbody>
-                        </table></div><div class="row"><div class="col-md-5 col-sm-12"><div class="dataTables_info" id="sample_editable_1_info" role="status" aria-live="polite">Showing 1 to 6 of 6 entries</div></div><div class="col-md-7 col-sm-12"><div class="dataTables_paginate paging_simple_numbers" id="sample_editable_1_paginate"><ul class="pagination"><li class="paginate_button previous disabled" aria-controls="sample_editable_1" tabindex="0" id="sample_editable_1_previous"><a href="#"><i class="fa fa-angle-left"></i></a></li><li class="paginate_button active" aria-controls="sample_editable_1" tabindex="0"><a href="#">1</a></li><li class="paginate_button next disabled" aria-controls="sample_editable_1" tabindex="0" id="sample_editable_1_next"><a href="#"><i class="fa fa-angle-right"></i></a></li></ul></div></div></div></div>
+                        </table></div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-12">
+                                        <div class="dataTables_info" id="sample_editable_1_info" role="status" aria-live="polite">
+                                        Total :  {{ pagination.getTotalItemCount }}   <!--{{pagination.isSorted('a.nome')}}-->
+                                        </div>
+                                    </div>
+                                        <div class="col-md-7 col-sm-12">
+                                            <div class="dataTables_paginate paging_simple_numbers" id="sample_editable_1_paginate">
+                                             {{ knp_pagination_render(pagination) }}   
+                                             
+                                            </div></div></div></div>
             </div>
         </div>
         <!-- END EXAMPLE TABLE PORTLET-->
