@@ -1,3 +1,201 @@
+/* ===========================================================
+ * Bootstrap: fileinput.js v3.1.3
+ * http://jasny.github.com/bootstrap/javascript/#fileinput
+ * ===========================================================
+ * Copyright 2012-2014 Arnold Daniels
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ========================================================== */
+
++function ($) { "use strict";
+
+  var isIE = window.navigator.appName == 'Microsoft Internet Explorer'
+
+  // FILEUPLOAD PUBLIC CLASS DEFINITION
+  // =================================
+
+  var Fileinput = function (element, options) {
+    this.$element = $(element)
+    
+    this.$input = this.$element.find(':file')
+    if (this.$input.length === 0) return
+
+    this.name = this.$input.attr('name') || options.name
+
+    this.$hidden = this.$element.find('input[type=hidden][name="' + this.name + '"]')
+    if (this.$hidden.length === 0) {
+      this.$hidden = $('<input type="hidden">').insertBefore(this.$input)
+    }
+
+    this.$preview = this.$element.find('.fileinput-preview')
+    var height = this.$preview.css('height')
+    if (this.$preview.css('display') !== 'inline' && height !== '0px' && height !== 'none') {
+      this.$preview.css('line-height', height)
+    }
+        
+    this.original = {
+      exists: this.$element.hasClass('fileinput-exists'),
+      preview: this.$preview.html(),
+      hiddenVal: this.$hidden.val()
+    }
+    
+    this.listen()
+  }
+  
+  Fileinput.prototype.listen = function() {
+    this.$input.on('change.bs.fileinput', $.proxy(this.change, this))
+    $(this.$input[0].form).on('reset.bs.fileinput', $.proxy(this.reset, this))
+    
+    this.$element.find('[data-trigger="fileinput"]').on('click.bs.fileinput', $.proxy(this.trigger, this))
+    this.$element.find('[data-dismiss="fileinput"]').on('click.bs.fileinput', $.proxy(this.clear, this))
+  },
+
+  Fileinput.prototype.change = function(e) {
+    var files = e.target.files === undefined ? (e.target && e.target.value ? [{ name: e.target.value.replace(/^.+\\/, '')}] : []) : e.target.files
+    
+    e.stopPropagation()
+
+    if (files.length === 0) {
+      this.clear()
+      return
+    }
+
+    this.$hidden.val('')
+    this.$hidden.attr('name', '')
+    this.$input.attr('name', this.name)
+
+    var file = files[0]
+
+    if (this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match(/^image\/(gif|png|jpeg)$/) : file.name.match(/\.(gif|png|jpe?g)$/i)) && typeof FileReader !== "undefined") {
+      var reader = new FileReader()
+      var preview = this.$preview
+      var element = this.$element
+
+      reader.onload = function(re) {
+        var $img = $('<img>')
+        $img[0].src = re.target.result
+        files[0].result = re.target.result
+        
+        element.find('.fileinput-filename').text(file.name)
+        
+        // if parent has max-height, using `(max-)height: 100%` on child doesn't take padding and border into account
+        if (preview.css('max-height') != 'none') $img.css('max-height', parseInt(preview.css('max-height'), 10) - parseInt(preview.css('padding-top'), 10) - parseInt(preview.css('padding-bottom'), 10)  - parseInt(preview.css('border-top'), 10) - parseInt(preview.css('border-bottom'), 10))
+        
+        preview.html($img)
+        element.addClass('fileinput-exists').removeClass('fileinput-new')
+
+        element.trigger('change.bs.fileinput', files)
+      }
+
+      reader.readAsDataURL(file)
+    } else {
+      this.$element.find('.fileinput-filename').text(file.name)
+      this.$preview.text(file.name)
+      
+      this.$element.addClass('fileinput-exists').removeClass('fileinput-new')
+      
+      this.$element.trigger('change.bs.fileinput')
+    }
+  },
+
+  Fileinput.prototype.clear = function(e) {
+    if (e) e.preventDefault()
+    
+    this.$hidden.val('')
+    this.$hidden.attr('name', this.name)
+    this.$input.attr('name', '')
+
+    //ie8+ doesn't support changing the value of input with type=file so clone instead
+    if (isIE) { 
+      var inputClone = this.$input.clone(true);
+      this.$input.after(inputClone);
+      this.$input.remove();
+      this.$input = inputClone;
+    } else {
+      this.$input.val('')
+    }
+
+    this.$preview.html('')
+    this.$element.find('.fileinput-filename').text('')
+    this.$element.addClass('fileinput-new').removeClass('fileinput-exists')
+    
+    if (e !== undefined) {
+      this.$input.trigger('change')
+      this.$element.trigger('clear.bs.fileinput')
+    }
+  },
+
+  Fileinput.prototype.reset = function() {
+    this.clear()
+
+    this.$hidden.val(this.original.hiddenVal)
+    this.$preview.html(this.original.preview)
+    this.$element.find('.fileinput-filename').text('')
+
+    if (this.original.exists) this.$element.addClass('fileinput-exists').removeClass('fileinput-new')
+     else this.$element.addClass('fileinput-new').removeClass('fileinput-exists')
+    
+    this.$element.trigger('reset.bs.fileinput')
+  },
+
+  Fileinput.prototype.trigger = function(e) {
+    this.$input.trigger('click')
+    e.preventDefault()
+  }
+
+  
+  // FILEUPLOAD PLUGIN DEFINITION
+  // ===========================
+
+  var old = $.fn.fileinput
+  
+  $.fn.fileinput = function (options) {
+    return this.each(function () {
+      var $this = $(this),
+          data = $this.data('bs.fileinput')
+      if (!data) $this.data('bs.fileinput', (data = new Fileinput(this, options)))
+      if (typeof options == 'string') data[options]()
+    })
+  }
+
+  $.fn.fileinput.Constructor = Fileinput
+
+
+  // FILEINPUT NO CONFLICT
+  // ====================
+
+  $.fn.fileinput.noConflict = function () {
+    $.fn.fileinput = old
+    return this
+  }
+
+
+  // FILEUPLOAD DATA-API
+  // ==================
+
+  $(document).on('click.fileinput.data-api', '[data-provides="fileinput"]', function (e) {
+    var $this = $(this)
+    if ($this.data('bs.fileinput')) return
+    $this.fileinput($this.data())
+      
+    var $target = $(e.target).closest('[data-dismiss="fileinput"],[data-trigger="fileinput"]');
+    if ($target.length > 0) {
+      e.preventDefault()
+      $target.trigger('click.bs.fileinput')
+    }
+  })
+
+}(window.jQuery);
 /**
  * Project: Bootstrap Hover Dropdown
  * Author: Cameron Spear
@@ -2047,3 +2245,12 @@ window.matchMedia=window.matchMedia||function(a){"use strict";var c,d=a.document
 
 /*! Respond.js v1.1.0: min/max-width media query polyfill. (c) Scott Jehl. MIT/GPLv2 Lic. j.mp/respondjs  */
 (function(a){"use strict";function x(){u(!0)}var b={};if(a.respond=b,b.update=function(){},b.mediaQueriesSupported=a.matchMedia&&a.matchMedia("only all").matches,!b.mediaQueriesSupported){var q,r,t,c=a.document,d=c.documentElement,e=[],f=[],g=[],h={},i=30,j=c.getElementsByTagName("head")[0]||d,k=c.getElementsByTagName("base")[0],l=j.getElementsByTagName("link"),m=[],n=function(){for(var b=0;l.length>b;b++){var c=l[b],d=c.href,e=c.media,f=c.rel&&"stylesheet"===c.rel.toLowerCase();d&&f&&!h[d]&&(c.styleSheet&&c.styleSheet.rawCssText?(p(c.styleSheet.rawCssText,d,e),h[d]=!0):(!/^([a-zA-Z:]*\/\/)/.test(d)&&!k||d.replace(RegExp.$1,"").split("/")[0]===a.location.host)&&m.push({href:d,media:e}))}o()},o=function(){if(m.length){var b=m.shift();v(b.href,function(c){p(c,b.href,b.media),h[b.href]=!0,a.setTimeout(function(){o()},0)})}},p=function(a,b,c){var d=a.match(/@media[^\{]+\{([^\{\}]*\{[^\}\{]*\})+/gi),g=d&&d.length||0;b=b.substring(0,b.lastIndexOf("/"));var h=function(a){return a.replace(/(url\()['"]?([^\/\)'"][^:\)'"]+)['"]?(\))/g,"$1"+b+"$2$3")},i=!g&&c;b.length&&(b+="/"),i&&(g=1);for(var j=0;g>j;j++){var k,l,m,n;i?(k=c,f.push(h(a))):(k=d[j].match(/@media *([^\{]+)\{([\S\s]+?)$/)&&RegExp.$1,f.push(RegExp.$2&&h(RegExp.$2))),m=k.split(","),n=m.length;for(var o=0;n>o;o++)l=m[o],e.push({media:l.split("(")[0].match(/(only\s+)?([a-zA-Z]+)\s?/)&&RegExp.$2||"all",rules:f.length-1,hasquery:l.indexOf("(")>-1,minw:l.match(/\(\s*min\-width\s*:\s*(\s*[0-9\.]+)(px|em)\s*\)/)&&parseFloat(RegExp.$1)+(RegExp.$2||""),maxw:l.match(/\(\s*max\-width\s*:\s*(\s*[0-9\.]+)(px|em)\s*\)/)&&parseFloat(RegExp.$1)+(RegExp.$2||"")})}u()},s=function(){var a,b=c.createElement("div"),e=c.body,f=!1;return b.style.cssText="position:absolute;font-size:1em;width:1em",e||(e=f=c.createElement("body"),e.style.background="none"),e.appendChild(b),d.insertBefore(e,d.firstChild),a=b.offsetWidth,f?d.removeChild(e):e.removeChild(b),a=t=parseFloat(a)},u=function(b){var h="clientWidth",k=d[h],m="CSS1Compat"===c.compatMode&&k||c.body[h]||k,n={},o=l[l.length-1],p=(new Date).getTime();if(b&&q&&i>p-q)return a.clearTimeout(r),r=a.setTimeout(u,i),void 0;q=p;for(var v in e)if(e.hasOwnProperty(v)){var w=e[v],x=w.minw,y=w.maxw,z=null===x,A=null===y,B="em";x&&(x=parseFloat(x)*(x.indexOf(B)>-1?t||s():1)),y&&(y=parseFloat(y)*(y.indexOf(B)>-1?t||s():1)),w.hasquery&&(z&&A||!(z||m>=x)||!(A||y>=m))||(n[w.media]||(n[w.media]=[]),n[w.media].push(f[w.rules]))}for(var C in g)g.hasOwnProperty(C)&&g[C]&&g[C].parentNode===j&&j.removeChild(g[C]);for(var D in n)if(n.hasOwnProperty(D)){var E=c.createElement("style"),F=n[D].join("\n");E.type="text/css",E.media=D,j.insertBefore(E,o.nextSibling),E.styleSheet?E.styleSheet.cssText=F:E.appendChild(c.createTextNode(F)),g.push(E)}},v=function(a,b){var c=w();c&&(c.open("GET",a,!0),c.onreadystatechange=function(){4!==c.readyState||200!==c.status&&304!==c.status||b(c.responseText)},4!==c.readyState&&c.send(null))},w=function(){var b=!1;try{b=new a.XMLHttpRequest}catch(c){b=new a.ActiveXObject("Microsoft.XMLHTTP")}return function(){return b}}();n(),b.update=n,a.addEventListener?a.addEventListener("resize",x,!1):a.attachEvent&&a.attachEvent("onresize",x)}})(this);
+
+/*! http://responsiveslides.com v1.54 by @viljamis */
+(function(c,I,B){c.fn.responsiveSlides=function(l){var a=c.extend({auto:!0,speed:500,timeout:4E3,pager:!1,nav:!1,random:!1,pause:!1,pauseControls:!0,prevText:"Previous",nextText:"Next",maxwidth:"",navContainer:"",manualControls:"",namespace:"rslides",before:c.noop,after:c.noop},l);return this.each(function(){B++;var f=c(this),s,r,t,m,p,q,n=0,e=f.children(),C=e.size(),h=parseFloat(a.speed),D=parseFloat(a.timeout),u=parseFloat(a.maxwidth),g=a.namespace,d=g+B,E=g+"_nav "+d+"_nav",v=g+"_here",j=d+"_on",
+w=d+"_s",k=c("<ul class='"+g+"_tabs "+d+"_tabs' />"),x={"float":"left",position:"relative",opacity:1,zIndex:2},y={"float":"none",position:"absolute",opacity:0,zIndex:1},F=function(){var b=(document.body||document.documentElement).style,a="transition";if("string"===typeof b[a])return!0;s=["Moz","Webkit","Khtml","O","ms"];var a=a.charAt(0).toUpperCase()+a.substr(1),c;for(c=0;c<s.length;c++)if("string"===typeof b[s[c]+a])return!0;return!1}(),z=function(b){a.before(b);F?(e.removeClass(j).css(y).eq(b).addClass(j).css(x),
+n=b,setTimeout(function(){a.after(b)},h)):e.stop().fadeOut(h,function(){c(this).removeClass(j).css(y).css("opacity",1)}).eq(b).fadeIn(h,function(){c(this).addClass(j).css(x);a.after(b);n=b})};a.random&&(e.sort(function(){return Math.round(Math.random())-0.5}),f.empty().append(e));e.each(function(a){this.id=w+a});f.addClass(g+" "+d);l&&l.maxwidth&&f.css("max-width",u);e.hide().css(y).eq(0).addClass(j).css(x).show();F&&e.show().css({"-webkit-transition":"opacity "+h+"ms ease-in-out","-moz-transition":"opacity "+
+h+"ms ease-in-out","-o-transition":"opacity "+h+"ms ease-in-out",transition:"opacity "+h+"ms ease-in-out"});if(1<e.size()){if(D<h+100)return;if(a.pager&&!a.manualControls){var A=[];e.each(function(a){a+=1;A+="<li><a href='#' class='"+w+a+"'>"+a+"</a></li>"});k.append(A);l.navContainer?c(a.navContainer).append(k):f.after(k)}a.manualControls&&(k=c(a.manualControls),k.addClass(g+"_tabs "+d+"_tabs"));(a.pager||a.manualControls)&&k.find("li").each(function(a){c(this).addClass(w+(a+1))});if(a.pager||a.manualControls)q=
+k.find("a"),r=function(a){q.closest("li").removeClass(v).eq(a).addClass(v)};a.auto&&(t=function(){p=setInterval(function(){e.stop(!0,!0);var b=n+1<C?n+1:0;(a.pager||a.manualControls)&&r(b);z(b)},D)},t());m=function(){a.auto&&(clearInterval(p),t())};a.pause&&f.hover(function(){clearInterval(p)},function(){m()});if(a.pager||a.manualControls)q.bind("click",function(b){b.preventDefault();a.pauseControls||m();b=q.index(this);n===b||c("."+j).queue("fx").length||(r(b),z(b))}).eq(0).closest("li").addClass(v),
+a.pauseControls&&q.hover(function(){clearInterval(p)},function(){m()});if(a.nav){g="<a href='#' class='"+E+" prev'>"+a.prevText+"</a><a href='#' class='"+E+" next'>"+a.nextText+"</a>";l.navContainer?c(a.navContainer).append(g):f.after(g);var d=c("."+d+"_nav"),G=d.filter(".prev");d.bind("click",function(b){b.preventDefault();b=c("."+j);if(!b.queue("fx").length){var d=e.index(b);b=d-1;d=d+1<C?n+1:0;z(c(this)[0]===G[0]?b:d);if(a.pager||a.manualControls)r(c(this)[0]===G[0]?b:d);a.pauseControls||m()}});
+a.pauseControls&&d.hover(function(){clearInterval(p)},function(){m()})}}if("undefined"===typeof document.body.style.maxWidth&&l.maxwidth){var H=function(){f.css("width","100%");f.width()>u&&f.css("width",u)};H();c(I).bind("resize",function(){H()})}})}})(jQuery,this,0);

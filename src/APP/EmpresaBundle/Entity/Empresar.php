@@ -44,9 +44,7 @@ class Empresar {
     private $cnpj;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="logo", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Fotos", mappedBy="empresar")
      */
     private $logo;
 

@@ -37,7 +37,7 @@ class Fotos {
      *
      * @ORM\Column(name="principal", type="boolean")
      */
-    private $principal;
+    private $principal = 0 ;
 
     /**
      * @Assert\File(maxSize="6000000")
@@ -49,6 +49,30 @@ class Fotos {
      * @ORM\JoinColumn(name="produto_id", referencedColumnName="id")
      */
     private $produto;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Empresar", inversedBy="logo")
+     * @ORM\JoinColumn(name="empresar_id", referencedColumnName="id",nullable=true)
+     */
+    private $empresar;
+    
+    private $caminho= null;
+
+    function getCaminho() {
+        return $this->caminho;
+    }
+
+    function setCaminho($caminho) {
+        $this->caminho = $caminho;
+    }
+
+    function getEmpresar() {
+        return $this->empresar;
+    }
+
+    function setEmpresar($empresar) {
+        $this->empresar = $empresar;
+    }
 
     function getProduto() {
         return $this->produto;
@@ -146,7 +170,7 @@ class Fotos {
     protected function getUploadDir() {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/produtos';
+        return (null === $this->getCaminho())? 'uploads/produtos':$this->getCaminho();
     }
 
     public function upload() {
@@ -170,7 +194,5 @@ class Fotos {
         // clean up the file property as you won't need it anymore
         $this->file = null;
     }
-
-    
 
 }

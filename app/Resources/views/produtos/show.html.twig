@@ -13,9 +13,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="btn-group">
-                            <button id="sample_editable_1_new" class="btn green">
-                                Add New <i class="fa fa-plus"></i>
-                            </button>
+                            <a class="btn green" style="margin-bottom: 20px;">
+                                Adicionar novo produto <i class="fa fa-plus"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -32,7 +32,7 @@
                             </div>
                         </div>
 
-                         <div class="row">
+                        <div class="row">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Valor :</label>
                                 <div class="col-md-10">
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                         </div>
-                                   <div class="row">
+                        <div class="row">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Quantidade :</label>
                                 <div class="col-md-10">
@@ -48,20 +48,20 @@
                                 </div>
                             </div>
                         </div>
-                                
-                                   <div class="row">
+
+                        <div class="row">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Status :</label>
                                 <div class="col-md-10">
-                                   {% if produto.status %}Ativo{% else %}Inativo{% endif %}
+                                    {% if produto.status %}Ativo{% else %}Inativo{% endif %}
                                 </div>
                             </div>
                         </div>
-                                   <div class="row">
+                        <div class="row">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Data cadastro :</label>
                                 <div class="col-md-10">
-                                  {% if produto.dataCadastro %}{{ produto.dataCadastro|date('Y-m-d H:i:s') }}{% endif %}
+                                    {% if produto.dataCadastro %}{{ produto.dataCadastro|date('Y-m-d H:i:s') }}{% endif %}
                                 </div>
                             </div>
                         </div>
@@ -73,17 +73,39 @@
                                         <h3 class="panel-title">Descricao</h3>
                                     </div>
                                     <div class="panel-body">
-                                       {{ produto.descricao }}
+                                        {{ produto.descricao }}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                      
+
 
                     </div>
 
 
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <ul class="rslides" id="slider3">
+                             {% for array in  produto.fotos  %}
+                            <li><img src="{{asset('uploads/produtos/'~array.arquivo)}}" alt=""></li>
+                           
+                             {%endfor %}
+                        </ul>
+
+                        <!-- Slideshow 3 Pager -->
+                        <ul id="slider3-pager">
+                             {% for array in  produto.fotos %}
+                            
+                                 <li><a href="#"><img style="height: 50px; width: 50px" src="{{asset('uploads/produtos/'~array.arquivo)}}" alt=""></a></li>
+                             {%endfor %}
+                        </ul>
+                    </div>
+
+                </div>
             </div>
         </div> 
     {% endblock %}
+
+  

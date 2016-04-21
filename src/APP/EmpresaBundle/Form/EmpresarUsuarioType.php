@@ -5,6 +5,8 @@ namespace APP\EmpresaBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class EmpresarUsuarioType extends AbstractType
 {
@@ -18,7 +20,7 @@ class EmpresarUsuarioType extends AbstractType
             ->add('nome')
             ->add('descricao')
             ->add('cnpj')
-            ->add('logo')
+            ->add('logo',FileType::class,['mapped'=>false,'required'=>false])
            
         ;
     }

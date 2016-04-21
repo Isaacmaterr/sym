@@ -7,6 +7,15 @@ services:
     authentication.handler.login_success_handler:
         class:  APP\UsuarioBundle\Security\LoginSuccessHandler
         arguments:  ['@router', '@security.authorization_checker']
+
+    app.twig_extension:
+        class: APP\EmpresaBundle\Twig\AppExtension
+        calls:
+            - [setRequest, ["@?request="]]
+        
+        
+        tags:
+            - { name: twig.extension }
     
 #    service_name:
 #        class: AppBundle\Directory\ClassName

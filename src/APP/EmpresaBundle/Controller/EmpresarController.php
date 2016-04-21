@@ -4,6 +4,9 @@ namespace APP\EmpresaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use APP\EmpresaBundle\Entity\Fotos;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 use APP\EmpresaBundle\Entity\Empresar;
 
@@ -102,8 +105,11 @@ class EmpresarController extends Controller
     
       public function minhaempresaAction(Request $request)
     {
-          
+      //var_dump($request->attributes->get('_controller'));
+      //exit();
       $empresar =   $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+      $session = new Session();
+      $session->set('teste', 'isaac');
       if($empresar){
        $Form = $this->createForm('APP\EmpresaBundle\Form\EmpresarUsuarioType', $empresar);
        }else{
@@ -114,12 +120,21 @@ class EmpresarController extends Controller
        
         if ($Form->isSubmitted() && $Form->isValid()) {
             $dadosEmpresar = $Form->getData();
+           
             
             $usuario =  $this->get('security.token_storage')->getToken()->getUser();
             $dadosEmpresar->setUsuario($usuario);
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($dadosEmpresar);
+            if($Form->get("logo")->getData()){
+            $fotos = new Fotos();
+            $fotos->setCaminho('uploads/logos');
+            $fotos->setEmpresar($dadosEmpresar);
+            $fotos->setFile($Form->get("logo")->getData());
+            $em->persist($fotos);
+            $fotos->upload();
+            }
             $em->flush();
 
             return $this->redirectToRoute('empresar_minha');

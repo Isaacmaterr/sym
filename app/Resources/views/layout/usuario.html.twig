@@ -1,6 +1,9 @@
 {% extends "::base.html.twig"%}
  {% block sidebar %}
-     
+     {% set params = app.request.attributes.get("_controller") | params %}
+     {{params.Controle.1}}
+     {{params.Action.1}}
+  
      <!-- BEGIN SIDEBAR -->
                 <div class="page-sidebar-wrapper">
                     <div class="page-sidebar navbar-collapse collapse">
@@ -24,7 +27,8 @@
                                     </div>
                                 </form>
                             </li>
-                               <li class="start">
+                               <li class="start  {% if( params.Controle.1=='Usuario' and params.Action.1=='painel' )
+                            %} active {% endif %} ">
                                 <a href=" {{path('painel_usuario')}}">
                                     <i class="icon-home"></i>
                                     <span class="title">Painel</span>
@@ -32,9 +36,10 @@
                                     <span class="arrow open"></span>
                                 </a>
                             </li>
-                            <li class="start active open">
+                            <li class="start {% if( params.Controle.1=='Produtos' and params.Action.1=='index' )
+                            %} active {% endif %} ">
                                 <a href=" {{path('produtos_index')}}">
-                                    <i class="icon-home"></i>
+                                   <i class="icon-home"></i>
                                     <span class="title">Produto</span>
                                     <span class="selected"></span>
                                     <span class="arrow open"></span>
@@ -42,7 +47,8 @@
                             </li>
                             
                             
-                              <li class="start  open">
+                              <li class="start  {% if( params.Controle.1=='Categoria' and params.Action.1=='index' )
+                            %} active {% endif %}  ">
                                 <a href=" {{path('categoria_index')}}">
                                     <i class="icon-home"></i>
                                     <span class="title">Categoria</span>
@@ -53,7 +59,8 @@
                             
                             
                             
-                               <li class="start  open">
+                               <li class="start {% if( params.Controle.1=='Empresar' and params.Action.1=='minhaempresa' )
+                            %} active {% endif %}  ">
                                 <a href=" {{path('empresar_minha')}}">
                                     <i class="icon-home"></i>
                                     <span class="title">Minha empresar</span>

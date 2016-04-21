@@ -36,7 +36,7 @@
                                     </th><th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
                                              Notes
                                              : activate to sort column ascending" style="width: 156px;">
-                                        {{ knp_pagination_sortable(pagination, 'Status', 'a.Status') }}
+                                        {{ knp_pagination_sortable(pagination, 'Status', 'a.status') }}
                                        
                                     </th><th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
                                              Edit
@@ -50,8 +50,7 @@
                                         <td class="highlight">
                                             <div class="success">
                                             </div>
-                                            <a href="#">
-                                                {{ categorium.nome }} </a>
+                                            <a href="#"> {{ categorium.nome }} </a>
                                         </td>
                                         <td class="hidden-xs">
                                             {% if categorium.status %}Ativo{% else %}Inativo{% endif %}
