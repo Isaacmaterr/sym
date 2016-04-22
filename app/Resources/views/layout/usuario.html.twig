@@ -36,6 +36,19 @@
                                     <span class="arrow open"></span>
                                 </a>
                             </li>
+                            
+                            
+                                 <li class="start  {% if( params.Controle.1=='Fotos' and params.Action.1=='painel' )
+                            %} active {% endif %} ">
+                                <a href=" {{path('fotos_index')}}">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Banners</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
+                            
+                            
                             <li class="start {% if( params.Controle.1=='Produtos' and params.Action.1=='index' )
                             %} active {% endif %} ">
                                 <a href=" {{path('produtos_index')}}">

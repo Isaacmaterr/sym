@@ -1,0 +1,24 @@
+fotos_index:
+    path:     /
+    defaults: { _controller: "EmpresaBundle:Fotos:index" }
+    methods:  GET
+
+fotos_show:
+    path:     /{id}/show
+    defaults: { _controller: "EmpresaBundle:Fotos:show" }
+    methods:  GET
+
+fotos_new:
+    path:     /new
+    defaults: { _controller: "EmpresaBundle:Fotos:new" }
+    methods:  [GET, POST]
+
+fotos_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EmpresaBundle:Fotos:edit" }
+    methods:  [GET, POST]
+
+fotos_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EmpresaBundle:Fotos:delete" }
+    methods:  DELETE

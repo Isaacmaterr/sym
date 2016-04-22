@@ -33,11 +33,26 @@ class Fotos {
     private $arquivo;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255)
+     */
+    private $titulo;
+
+    function getTitulo() {
+        return $this->titulo;
+    }
+
+    function setTitulo($titulo) {
+        $this->titulo = $titulo;
+    }
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="principal", type="boolean")
      */
-    private $principal = 0 ;
+    private $principal = 0;
 
     /**
      * @Assert\File(maxSize="6000000")
@@ -51,12 +66,25 @@ class Fotos {
     private $produto;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Empresar", inversedBy="banners")
+     * @ORM\JoinColumn(name="empresar_banners_id", referencedColumnName="id")
+     */
+    private $empresarbanner;
+
+    function getEmpresarbanner() {
+        return $this->empresarbanner;
+    }
+
+    function setEmpresarbanner($empresarbanner) {
+        $this->empresarbanner = $empresarbanner;
+    }
+
+    /**
      * @ORM\OneToOne(targetEntity="Empresar", inversedBy="logo")
      * @ORM\JoinColumn(name="empresar_id", referencedColumnName="id",nullable=true)
      */
     private $empresar;
-    
-    private $caminho= null;
+    private $caminho = null;
 
     function getCaminho() {
         return $this->caminho;
@@ -170,7 +198,7 @@ class Fotos {
     protected function getUploadDir() {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return (null === $this->getCaminho())? 'uploads/produtos':$this->getCaminho();
+        return (null === $this->getCaminho()) ? 'uploads/produtos' : $this->getCaminho();
     }
 
     public function upload() {

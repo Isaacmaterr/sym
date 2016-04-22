@@ -71,6 +71,19 @@ class Empresar {
      */
     private $produtos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Fotos", mappedBy="empresarbanner")
+     */
+    private $banners;
+
+    function getBanners() {
+        return $this->banners;
+    }
+
+    function setBanners($banners) {
+        $this->banners = $banners;
+    }
+
     /** @ORM\PrePersist */
     public function preCadastro() {
 

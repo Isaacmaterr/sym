@@ -1,0 +1,67 @@
+{% extends '/layout/usuario.html.twig' %}
+
+{% block body %}
+    <div class="portlet box green ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>Cadastrar Banners
+            </div>
+            {{ form_errors(form) }}
+
+        </div>
+        <div class="portlet-body form ">
+            {{ form_start(form, {'action': path('fotos_new'), 'method': 'post','attr': {'class': 'form-horizontal'}}) }}
+
+
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Titulo</label>
+                    <div class="col-md-9">
+                        {{form_row(form.titulo ,{ 'label' : false, 'attr' : {'class' : 'form-control'}})}}
+
+                    </div>
+                </div>
+
+
+
+
+
+               <div class="form-group ">
+                    <label class="control-label col-md-3">Image Upload #1</label>
+                    <div class="col-md-9">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                            </div>
+                            <div>
+                                <span class="btn default btn-file">
+                                    <span class="fileinput-new">
+                                        Select image </span>
+                                    <span class="fileinput-exists">
+                                        Change </span>
+                                    {{form_row(form.arquivo , { 'label' : false, 'attr' : { 'class' : 'form-control' }})}}
+                                </span>
+                                <a href="#" class="btn red fileinput-exists" data-dismiss="fileinput">
+                                    Remove </a>
+                            </div>
+                        </div>
+                        <div class="clearfix margin-top-10">
+                            <span class="label label-danger">
+                                NOTE! </span>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </div>
+            </div>
+            {{form_rest(form)}}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

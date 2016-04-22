@@ -11,3 +11,6 @@ empresa_categoria:
     resource: "@EmpresaBundle/Resources/config/routing/categoria.yml"
     prefix:   /categoria
 
+empresa_fotos:
+        resource: "@EmpresaBundle/Resources/config/routing/fotos.yml"
+        prefix:   /fotos
