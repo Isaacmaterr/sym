@@ -44,8 +44,9 @@ class FotosController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
-             $foto->setFile($foto->getArquivo());
+          
+             $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+             $foto->setFile($form->get("arquivo")->getData());
              $foto->setEmpresarbanner($empresar);
              $foto->setPrincipal(0);
              $foto->setCaminho('uploads/Banners');
@@ -53,6 +54,7 @@ class FotosController extends Controller
             
              $em = $this->getDoctrine()->getManager();
             $em->persist($foto);
+              
             $em->flush();
 
             return $this->redirectToRoute('fotos_show', array('id' => $foto->getId()));

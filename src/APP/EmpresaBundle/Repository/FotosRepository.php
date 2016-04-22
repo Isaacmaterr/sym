@@ -13,7 +13,6 @@ class FotosRepository extends \Doctrine\ORM\EntityRepository {
     public function trasBanners() {
         $qb = $this->createQueryBuilder('u');
         $qb->where($qb->expr()->isNotNull('u.empresarbanner'));
-       
         return $qb->getQuery()->getResult(); 
     }
 

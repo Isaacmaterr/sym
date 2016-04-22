@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Receita list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Tipo</th>
+                <th>Valortotal</th>
+                <th>Qtdparcela</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for receitum in receitas %}
+            <tr>
+                <td><a href="{{ path('receita_show', { 'id': receitum.id }) }}">{{ receitum.id }}</a></td>
+                <td>{{ receitum.titulo }}</td>
+                <td>{{ receitum.tipo }}</td>
+                <td>{{ receitum.valorTotal }}</td>
+                <td>{{ receitum.qtdParcela }}</td>
+                <td>{{ receitum.status }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('receita_show', { 'id': receitum.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('receita_edit', { 'id': receitum.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('receita_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

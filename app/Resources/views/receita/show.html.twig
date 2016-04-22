@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Receita</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ receitum.id }}</td>
+            </tr>
+            <tr>
+                <th>Titulo</th>
+                <td>{{ receitum.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ receitum.tipo }}</td>
+            </tr>
+            <tr>
+                <th>Valortotal</th>
+                <td>{{ receitum.valorTotal }}</td>
+            </tr>
+            <tr>
+                <th>Qtdparcela</th>
+                <td>{{ receitum.qtdParcela }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ receitum.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('receita_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('receita_edit', { 'id': receitum.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

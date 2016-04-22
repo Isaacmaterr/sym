@@ -54,7 +54,7 @@ class CategoriaController extends Controller {
 
             $categoria = $form->getData();
 
-
+            
             $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
             $categoria->setEmpresar($empresa);
             $em = $this->getDoctrine()->getManager();

@@ -42,6 +42,7 @@ class Produtos {
      * @ORM\Column(name="descricao", type="string", length=255)
      */
     private $descricao;
+    
     private $imagens;
 
     function getImagens() {

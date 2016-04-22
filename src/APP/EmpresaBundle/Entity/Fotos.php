@@ -35,7 +35,7 @@ class Fotos {
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=255)
+     * @ORM\Column(name="titulo", type="string", length=255,nullable=true)
      */
     private $titulo;
 
