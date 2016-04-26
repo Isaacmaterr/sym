@@ -25,15 +25,15 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body class="page-header-fixed page-quick-sidebar-over-content page-style-square">
-
+  
 
         {% block head %}
             <!-- BEGIN HEADER -->
             <div class="page-header navbar navbar-fixed-top">
                 <div class="page-header-inner">
-                    <div class="page-logo">
+                    <div class="page-logo 1234">
                         <a href="index.html">
-                            <img src="../../assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
+                            <img src="{{asset('uploads/logos/'~app.user.empresa.logo.arquivo)}}" alt="logo" class="logo-default"/>
                         </a>
                         <div class="menu-toggler sidebar-toggler hide">
                         </div>

@@ -5,8 +5,8 @@
 
 {% block body %}
 
-<!--{{ app.session.get('security.token_storage') }}-->
-
+{{ app.session.get('security.token_storage') }}
+{{ app.user.empresa.logo.arquivo }} 
 
 <!--{{ path(app.request.attributes.get('_route'),
          app.request.attributes.get('_route_params')) }}-->

@@ -38,12 +38,19 @@ class UsuarioType extends AbstractType {
                 ->add("password", RepeatedType::class, ['type' => PasswordType::class])
                 ->add("password", RepeatedType::class, ['type' => PasswordType::class])
                 ->add("tipo", ChoiceType::class, [ 'choices' => $roles])
-                ->add("telefones", TextType::class)
+               // ->add("telefones", TextType::class)
                 ->add("endereco", TextType::class)
                 ->add("bairro", TextType::class)
                 ->add("uf", TextType::class)
                 ->add("cep", TextType::class)
                 ->add("salva", SubmitType::class, ['label' => "Salva"])
+                ->add('telefones', CollectionType::class, [
+                    'mapped' => false,
+                    'entry_type' => TextType::class,
+                    'entry_options' => [
+                        'attr' => ['class' => 'email-box']
+                    ]
+        ]);
         ;
     }
 
@@ -52,7 +59,7 @@ class UsuarioType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' =>null,
+            'data_class' => null,
         ));
     }
 
