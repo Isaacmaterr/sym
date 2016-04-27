@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 class ReceitaType extends AbstractType {
 
@@ -22,12 +24,12 @@ class ReceitaType extends AbstractType {
                 ->add('titulo')
                 ->add('tipo', ChoiceType::class, [ 'choices' => $roles])
                 ->add('valorTotal')
-                ->add('qtdParcela')
+                ->add('qtdParcela',TextType::class)
                 //->add('status')
                 //->add('empresa')
                 ->add('parcelas', CollectionType::class, [
                     'mapped' => false,
-                    'entry_type' => EmailType::class,
+                    'entry_type' => TextType::class,
                     'entry_options' => [
                         'attr' => ['class' => 'email-box']
                     ]
