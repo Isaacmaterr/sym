@@ -192,14 +192,16 @@
 
         <script>
             jQuery(document).ready(function () {
-                $("#slider3").responsiveSlides({
-                    manualControls: '#slider3-pager',
-                    maxwidth: 540
-                });
+            
                 Metronic.init(); // init metronic core components
                 Layout.init(); // init current layout
                 QuickSidebar.init(); // init quick sidebar
                 Demo.init(); // init demo features
+                
+                    $("#slider3").responsiveSlides({
+                    manualControls: '#slider3-pager',
+                    maxwidth: 540
+                });
             });
         </script>
     {% endblock %}

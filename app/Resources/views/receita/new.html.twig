@@ -61,7 +61,7 @@
                                         <i class="fa fa-plus "></i>
                                     </button>
                                 </div>
-                                {{form_row(form.qtdParcela ,{ 'label' : false, 'attr' : {'class' : 'form-control  '}})}}
+                                {{form_row(form.qtdParcela ,{ 'label' : false,'value':'1','attr' : {'class' : 'form-control'}})}}
                                 <div class="spinner-buttons input-group-btn">
                                     <button type="button" id="remove" class="btn spinner-down red ">
                                         <i class="fa fa-minus"></i>
@@ -74,22 +74,55 @@
 
 
 
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Tipo</label>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-envelope"></i>
-                            </span>
-                            <input type="text" id="form_parcelas_0" name="form[parcelas][0]" class="form-control " />  
+
+
+                <div class="col-md-6">
+                    <!-- BEGIN SAMPLE TABLE PORTLET-->
+                    <div class="portlet box red">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-cogs"></i>Simple Table
+                            </div>
+
+                        </div>
+                        <div class="portlet-body">
+                            <div class="table-scrollable">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Numero da parcela
+                                            </th>
+                                            <th>
+                                                Valor
+                                            </th>
+                                            <th>
+                                                Dia para vencimento
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tb">
+                                        <tr>
+                                            <td>
+                                                1
+                                                <input type="hidden"  value="1" id="form_parcelas_0" name="form[parcelas][0][numero]" class="form-control " />  
+                                            </td>
+                                            <td>
+                                                <input type="text"  name="form[parcelas][0][valor]" class="form-control " />  
+                                            </td>
+                                            <td>
+                                                <input type="text"  name="form[parcelas][0][vencimento]" class="form-control " /> 
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
+                    <!-- END SAMPLE TABLE PORTLET-->
                 </div>
-
-
-                              
-
-
 
 
             </div>
@@ -113,8 +146,12 @@
         $(document).ready(function () {
             i = 1;
             $("#add").click(function () {
+                 i++;
                 $('#receita_qtdParcela').val(i);
-                i++;
+                 $("#tb").append('<tr id="tr' + i + '"> <td>' + i + '<input type="hidden" value="' + i + '" name="form[parcelas][' + i + '][numero]" class="form-control "> </td>'+
+                        ' <td> <input type="text"  name="form[parcelas][' + i + '][valor]" class="form-control "> </td>'+
+                        '<td> <input type="text"  name="form[parcelas][' + i + '][vencimento]" class="form-control "> </td> </tr>'
+                );
             });
 
             $("#remove").click(function () {

@@ -40,6 +40,8 @@ class ReceitaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            var_dump($form->get("parcelas")->getData());
+            exit();
             $em = $this->getDoctrine()->getManager();
             $em->persist($receitum);
             $em->flush();
