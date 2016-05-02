@@ -33,7 +33,7 @@ class Parcelas
      *
      * @ORM\Column(name="status", type="integer", nullable=true)
      */
-    private $status;
+    private $status=1;
 
     /**
      * @var string
@@ -164,8 +164,11 @@ class Parcelas
      */
     public function setVencimento($vencimento)
     {
-        $this->vencimento = $vencimento;
+        
 
+        $data = date_create_from_format('d/m/Y',$vencimento);
+        $this->vencimento = $data;
+     
         return $this;
     }
 

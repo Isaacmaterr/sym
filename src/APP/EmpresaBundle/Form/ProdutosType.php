@@ -36,7 +36,7 @@ class ProdutosType extends AbstractType
             ->add('fileMult',FileType::class,['mapped'=>false,'multiple'=>true])
             ->add('salvar',SubmitType::class)
             ->add('categoria',EntityType::class, [
-                     'placeholder' => 'Escolha uma categoria',
+                    'placeholder' => 'Escolha uma categoria',
                     'empty_data'=>null,
                     'class' => 'EmpresaBundle:Categoria',
                     'query_builder' => function (EntityRepository $er) use ($empresar) {

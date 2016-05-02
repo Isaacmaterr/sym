@@ -4,28 +4,27 @@ namespace APP\EmpresaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use APP\EmpresaBundle\Entity\Receita;
-use APP\EmpresaBundle\Form\ReceitaType;
+//use APP\EmpresaBundle\Form\ReceitaType;
+use APP\EmpresaBundle\Entity\Parcelas;
 
 /**
  * Receita controller.
  *
  */
-class ReceitaController extends Controller
-{
+class ReceitaController extends Controller {
+
     /**
      * Lists all Receita entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $receitas = $em->getRepository('EmpresaBundle:Receita')->findAll();
 
         return $this->render('receita/index.html.twig', array(
-            'receitas' => $receitas,
+                    'receitas' => $receitas,
         ));
     }
 
@@ -33,25 +32,39 @@ class ReceitaController extends Controller
      * Creates a new Receita entity.
      *
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request) {
+        $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+
         $receitum = new Receita();
+        $receitum->setEmpresa($empresar);
         $form = $this->createForm('APP\EmpresaBundle\Form\ReceitaType', $receitum);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            var_dump($request->get("form")["parcelas"]);
-            exit();
+            //var_dump($form->getData());
+            //   var_dump($request->get("form")["parcelas"]);
+            // exit();
             $em = $this->getDoctrine()->getManager();
             $em->persist($receitum);
+
+            foreach ($request->get("form")["parcelas"] as $key => $parcela) {
+                $parc = new Parcelas();
+                $parc->setNumero($parcela['numero'])
+                        ->setValor($parcela['valor'])
+                        ->setVencimento($parcela['vencimento'])
+                        ->setEmpresa($empresar);
+                
+                $em->persist($parc);
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('receita_show', array('id' => $receitum->getId()));
         }
 
         return $this->render('receita/new.html.twig', array(
-            'receitum' => $receitum,
-            'form' => $form->createView(),
+                    'receitum' => $receitum,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -59,13 +72,12 @@ class ReceitaController extends Controller
      * Finds and displays a Receita entity.
      *
      */
-    public function showAction(Receita $receitum)
-    {
+    public function showAction(Receita $receitum) {
         $deleteForm = $this->createDeleteForm($receitum);
 
         return $this->render('receita/show.html.twig', array(
-            'receitum' => $receitum,
-            'delete_form' => $deleteForm->createView(),
+                    'receitum' => $receitum,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -73,8 +85,7 @@ class ReceitaController extends Controller
      * Displays a form to edit an existing Receita entity.
      *
      */
-    public function editAction(Request $request, Receita $receitum)
-    {
+    public function editAction(Request $request, Receita $receitum) {
         $deleteForm = $this->createDeleteForm($receitum);
         $editForm = $this->createForm('APP\EmpresaBundle\Form\ReceitaType', $receitum);
         $editForm->handleRequest($request);
@@ -88,9 +99,9 @@ class ReceitaController extends Controller
         }
 
         return $this->render('receita/edit.html.twig', array(
-            'receitum' => $receitum,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'receitum' => $receitum,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -98,8 +109,7 @@ class ReceitaController extends Controller
      * Deletes a Receita entity.
      *
      */
-    public function deleteAction(Request $request, Receita $receitum)
-    {
+    public function deleteAction(Request $request, Receita $receitum) {
         $form = $this->createDeleteForm($receitum);
         $form->handleRequest($request);
 
@@ -119,12 +129,12 @@ class ReceitaController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Receita $receitum)
-    {
+    private function createDeleteForm(Receita $receitum) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('receita_delete', array('id' => $receitum->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
+                        ->setAction($this->generateUrl('receita_delete', array('id' => $receitum->getId())))
+                        ->setMethod('DELETE')
+                        ->getForm()
         ;
     }
+
 }

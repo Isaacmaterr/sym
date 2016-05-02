@@ -1,4 +1,6 @@
-<?php namespace APP\EmpresaBundle\Entity;
+<?php
+
+namespace APP\EmpresaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,8 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="APP\EmpresaBundle\Repository\EmpresarRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Empresar
-{
+class Empresar {
 
     /**
      * @var int
@@ -66,6 +67,25 @@ class Empresar
     private $categorias;
 
     /**
+     * @ORM\OneToMany(targetEntity="Servicos", mappedBy="empresar")
+     */
+    private $servicos;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="Clientes", mappedBy="empresar")
+     */
+    private $clientes;
+    
+    function getServicos() {
+        return $this->servicos;
+    }
+
+    function setServicos($servicos) {
+        $this->servicos = $servicos;
+    }
+
+    
+    /**
      * @ORM\OneToMany(targetEntity="Produtos", mappedBy="empresar")
      */
     private $produtos;
@@ -85,70 +105,57 @@ class Empresar
      */
     private $parcelas;
 
-    function getParcelas()
-    {
+    function getParcelas() {
         return $this->parcelas;
     }
 
-    function setParcelas($parcelas)
-    {
+    function setParcelas($parcelas) {
         $this->parcelas = $parcelas;
     }
 
-    function getReceitas()
-    {
+    function getReceitas() {
         return $this->receitas;
     }
 
-    function setReceitas($receitas)
-    {
+    function setReceitas($receitas) {
         $this->receitas = $receitas;
     }
 
-    function getBanners()
-    {
+    function getBanners() {
         return $this->banners;
     }
 
-    function setBanners($banners)
-    {
+    function setBanners($banners) {
         $this->banners = $banners;
     }
 
     /** @ORM\PrePersist */
-    public function preCadastro()
-    {
+    public function preCadastro() {
 
         $this->slug = $this->nome;
     }
 
-    function getProdutos()
-    {
+    function getProdutos() {
         return $this->produtos;
     }
 
-    function setProdutos($produtos)
-    {
+    function setProdutos($produtos) {
         $this->produtos = $produtos;
     }
 
-    function getCategorias()
-    {
+    function getCategorias() {
         return $this->categorias;
     }
 
-    function setCategorias($categorias)
-    {
+    function setCategorias($categorias) {
         $this->categorias = $categorias;
     }
 
-    function getUsuario()
-    {
+    function getUsuario() {
         return $this->usuario;
     }
 
-    function setUsuario($usuario)
-    {
+    function setUsuario($usuario) {
         $this->usuario = $usuario;
     }
 
@@ -157,8 +164,7 @@ class Empresar
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -169,8 +175,7 @@ class Empresar
      *
      * @return Empresar
      */
-    public function setNome($nome)
-    {
+    public function setNome($nome) {
         $this->nome = $nome;
 
         return $this;
@@ -181,8 +186,7 @@ class Empresar
      *
      * @return string
      */
-    public function getNome()
-    {
+    public function getNome() {
         return $this->nome;
     }
 
@@ -193,8 +197,7 @@ class Empresar
      *
      * @return Empresar
      */
-    public function setDescricao($descricao)
-    {
+    public function setDescricao($descricao) {
         $this->descricao = $descricao;
 
         return $this;
@@ -205,8 +208,7 @@ class Empresar
      *
      * @return string
      */
-    public function getDescricao()
-    {
+    public function getDescricao() {
         return $this->descricao;
     }
 
@@ -217,8 +219,7 @@ class Empresar
      *
      * @return Empresar
      */
-    public function setCnpj($cnpj)
-    {
+    public function setCnpj($cnpj) {
         $this->cnpj = $cnpj;
 
         return $this;
@@ -229,8 +230,7 @@ class Empresar
      *
      * @return string
      */
-    public function getCnpj()
-    {
+    public function getCnpj() {
         return $this->cnpj;
     }
 
@@ -241,8 +241,7 @@ class Empresar
      *
      * @return Empresar
      */
-    public function setLogo($logo)
-    {
+    public function setLogo($logo) {
         $this->logo = $logo;
 
         return $this;
@@ -253,13 +252,12 @@ class Empresar
      *
      * @return string
      */
-    public function getLogo()
-    {
+    public function getLogo() {
         return $this->logo;
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return $this->nome;
     }
+
 }

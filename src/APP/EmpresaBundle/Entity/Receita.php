@@ -1,4 +1,6 @@
-<?php namespace APP\EmpresaBundle\Entity;
+<?php
+
+namespace APP\EmpresaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="receita")
  * @ORM\Entity(repositoryClass="APP\EmpresaBundle\Repository\ReceitaRepository")
  */
-class Receita
-{
+class Receita {
 
     /**
      * @var int
@@ -59,27 +60,53 @@ class Receita
      *
      * @ORM\Column(name="status", type="integer")
      */
-    private $status;
+    private $status = 1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Clientes", inversedBy="receitas")
+     * @ORM\JoinColumn(name="cliente_receita_id", referencedColumnName="id")
+     */
+    private $cliente;
+    
+    function getCliente() {
+        return $this->cliente;
+    }
+
+    function setCliente($cliente) {
+        $this->cliente = $cliente;
+    }
+
     
     
-    function getStatus()
-    {
+    /**
+     * @ORM\ManyToOne(targetEntity="Servicos", inversedBy="receitas")
+     * @ORM\JoinColumn(name="servico_receita_id", referencedColumnName="id",nullable=false)
+     */
+    private $servico;
+
+    
+    
+    function getServico() {
+        return $this->servico;
+    }
+
+    function setServico($servico) {
+        $this->servico = $servico;
+    }
+
+    function getStatus() {
         return $this->status;
     }
 
-    function setStatus($status)
-    {
+    function setStatus($status) {
         $this->status = $status;
     }
 
-    
-    function getEmpresa()
-    {
+    function getEmpresa() {
         return $this->empresa;
     }
 
-    function setEmpresa($empresa)
-    {
+    function setEmpresa($empresa) {
         $this->empresa = $empresa;
     }
 
@@ -88,8 +115,7 @@ class Receita
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -100,8 +126,7 @@ class Receita
      *
      * @return Receita
      */
-    public function setTitulo($titulo)
-    {
+    public function setTitulo($titulo) {
         $this->titulo = $titulo;
 
         return $this;
@@ -112,8 +137,7 @@ class Receita
      *
      * @return string
      */
-    public function getTitulo()
-    {
+    public function getTitulo() {
         return $this->titulo;
     }
 
@@ -124,8 +148,7 @@ class Receita
      *
      * @return Receita
      */
-    public function setTipo($tipo)
-    {
+    public function setTipo($tipo) {
         $this->tipo = $tipo;
 
         return $this;
@@ -136,8 +159,7 @@ class Receita
      *
      * @return int
      */
-    public function getTipo()
-    {
+    public function getTipo() {
         return $this->tipo;
     }
 
@@ -148,8 +170,7 @@ class Receita
      *
      * @return Receita
      */
-    public function setValorTotal($valorTotal)
-    {
+    public function setValorTotal($valorTotal) {
         $this->valorTotal = $valorTotal;
 
         return $this;
@@ -160,8 +181,7 @@ class Receita
      *
      * @return string
      */
-    public function getValorTotal()
-    {
+    public function getValorTotal() {
         return $this->valorTotal;
     }
 
@@ -172,8 +192,7 @@ class Receita
      *
      * @return Receita
      */
-    public function setQtdParcela($qtdParcela)
-    {
+    public function setQtdParcela($qtdParcela) {
         $this->qtdParcela = $qtdParcela;
 
         return $this;
@@ -184,8 +203,8 @@ class Receita
      *
      * @return int
      */
-    public function getQtdParcela()
-    {
+    public function getQtdParcela() {
         return $this->qtdParcela;
     }
+ 
 }
