@@ -1,47 +1,88 @@
-{% extends 'base.html.twig' %}
+
+
+
+
+{% extends '::/layout/usuario.html.twig' %}
+
 
 {% block body %}
-    <h1>Receita list</h1>
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Editable Table
+                </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titulo</th>
-                <th>Tipo</th>
-                <th>Valortotal</th>
-                <th>Qtdparcela</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for receitum in receitas %}
-            <tr>
-                <td><a href="{{ path('receita_show', { 'id': receitum.id }) }}">{{ receitum.id }}</a></td>
-                <td>{{ receitum.titulo }}</td>
-                <td>{{ receitum.tipo }}</td>
-                <td>{{ receitum.valorTotal }}</td>
-                <td>{{ receitum.qtdParcela }}</td>
-                <td>{{ receitum.status }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('receita_show', { 'id': receitum.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('receita_edit', { 'id': receitum.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <a id="sample_editable_1_new"  href="{{path('receita_new')}}" class="btn green">
+                                    Nova transação <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
 
-    <ul>
-        <li>
-            <a href="{{ path('receita_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="table-scrollable"><table class="table table-striped table-hover table-bordered dataTable no-footer" id="sample_editable_1" role="grid" aria-describedby="sample_editable_1_info">
+                            <thead>
+                                <tr>
+                                    <th>Titulo</th>
+                                    <th>Tipo</th>
+                                    <th>Valortotal</th>
+                                    <th>Quantidade de Parcelas</th>
+                                    <th>Cliente</th>
+                                    <th>Status</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             {% for receitum in receitas %}
+                                    <tr>
+                                        <td>{{ receitum.titulo }}</td>
+                                        <td>{{ receitum.tipo }}</td>
+                                        <td>{{ receitum.valorTotal }}</td>
+                                        <td>{{ receitum.qtdParcela }}</td>
+                                     
+                                        <td>   {% if(receitum.cliente.nome is defined) %}{{ receitum.cliente.nome }}   {% endif %}</td>
+                                     
+                                        <td>{% if(receitum.status==1) %} Não Finalizada {% else %}Finalizado{%endif%}</td>
+                                        <td>
+                                            <a href="{{ path('receita_edit', { 'id': receitum.id }) }}" class="btn default btn-xs purple">
+                                                <i class="fa fa-edit"></i> Edit </a>
+                                            <a href="{{ path('receita_show', { 'id': receitum.id }) }}" class="btn default btn-xs purple">
+                                                <i class="fa fa-edit"></i> show </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+
+
+
+
+                            </tbody>
+                        </table></div>
+                    <div class="row">
+                        <div class="col-md-5 col-sm-12">
+                            <div class="dataTables_info" id="sample_editable_1_info" role="status" aria-live="polite">
+                                Total : 
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-12">
+                            <div class="dataTables_paginate paging_simple_numbers" id="sample_editable_1_paginate">
+                                 
+
+                            </div></div></div></div>
+            </div>
+        </div>
+        
+    </div>                  
+
 {% endblock %}

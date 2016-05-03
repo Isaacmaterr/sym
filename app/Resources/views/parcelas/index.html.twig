@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Parcelas list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Status</th>
+                <th>Valor</th>
+                <th>Vencimento</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for parcela in parcelas %}
+            <tr>
+                <td><a href="{{ path('parcelas_show', { 'id': parcela.id }) }}">{{ parcela.id }}</a></td>
+                <td>{{ parcela.numero }}</td>
+                <td>{{ parcela.status }}</td>
+                <td>{{ parcela.valor }}</td>
+                <td>{% if parcela.vencimento %}{{ parcela.vencimento|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('parcelas_show', { 'id': parcela.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('parcelas_edit', { 'id': parcela.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('parcelas_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

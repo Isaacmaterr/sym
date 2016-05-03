@@ -22,7 +22,7 @@ class ReceitaController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $receitas = $em->getRepository('EmpresaBundle:Receita')->findAll();
-
+          
         return $this->render('receita/index.html.twig', array(
                     'receitas' => $receitas,
         ));
@@ -41,9 +41,7 @@ class ReceitaController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //var_dump($form->getData());
-            //   var_dump($request->get("form")["parcelas"]);
-            // exit();
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($receitum);
 
@@ -53,6 +51,7 @@ class ReceitaController extends Controller {
                         ->setValor($parcela['valor'])
                         ->setVencimento($parcela['vencimento'])
                         ->setEmpresa($empresar);
+                       $parc->setReceita($receitum);
                 
                 $em->persist($parc);
             }

@@ -58,8 +58,21 @@ class Parcelas
      */
     private $empresa;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Receita", inversedBy="parcelas")
+     * @ORM\JoinColumn(name="receita_parcelas_id", referencedColumnName="id",nullable=false)
+     */
+    private $receita;
     
-    function getEmpresa()
+    function getReceita() {
+        return $this->receita;
+    }
+
+    function setReceita($receita) {
+        $this->receita = $receita;
+    }
+
+        function getEmpresa()
     {
         return $this->empresa;
     }

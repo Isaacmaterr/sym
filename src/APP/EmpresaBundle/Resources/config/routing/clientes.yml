@@ -1,0 +1,24 @@
+clientes_index:
+    path:     /
+    defaults: { _controller: "EmpresaBundle:Clientes:index" }
+    methods:  GET
+
+clientes_show:
+    path:     /{id}/show
+    defaults: { _controller: "EmpresaBundle:Clientes:show" }
+    methods:  GET
+
+clientes_new:
+    path:     /new
+    defaults: { _controller: "EmpresaBundle:Clientes:new" }
+    methods:  [GET, POST]
+
+clientes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EmpresaBundle:Clientes:edit" }
+    methods:  [GET, POST]
+
+clientes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EmpresaBundle:Clientes:delete" }
+    methods:  DELETE

@@ -18,3 +18,14 @@ empresa_fotos:
 empresa_receita:
         resource: "@EmpresaBundle/Resources/config/routing/receita.yml"
         prefix:   /receita
+        
+empresa_clientes:
+        resource: "@EmpresaBundle/Resources/config/routing/clientes.yml"
+        prefix:   /clientes
+        
+empresa_parcelas:
+        resource: "@EmpresaBundle/Resources/config/routing/parcelas.yml"
+        prefix:   /parcelas        
+        
+        
+        

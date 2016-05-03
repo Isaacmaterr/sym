@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="receita")
  * @ORM\Entity(repositoryClass="APP\EmpresaBundle\Repository\ReceitaRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Receita {
 
@@ -67,6 +68,23 @@ class Receita {
      * @ORM\JoinColumn(name="cliente_receita_id", referencedColumnName="id")
      */
     private $cliente;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Parcelas", mappedBy="receita")
+     */
+    private $parcelas;
+    
+      /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data_cadastro", type="datetime")
+     */
+    private $dataCadastro;
+    
+       /** @ORM\PrePersist */
+    public function preCadastro() {
+        $this->dataCadastro = new \DateTime("now");
+    }
     
     function getCliente() {
         return $this->cliente;

@@ -1,0 +1,24 @@
+parcelas_index:
+    path:     /
+    defaults: { _controller: "EmpresaBundle:Parcelas:index" }
+    methods:  GET
+
+parcelas_show:
+    path:     /{id}/show
+    defaults: { _controller: "EmpresaBundle:Parcelas:show" }
+    methods:  GET
+
+parcelas_new:
+    path:     /new
+    defaults: { _controller: "EmpresaBundle:Parcelas:new" }
+    methods:  [GET, POST]
+
+parcelas_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EmpresaBundle:Parcelas:edit" }
+    methods:  [GET, POST]
+
+parcelas_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EmpresaBundle:Parcelas:delete" }
+    methods:  DELETE
