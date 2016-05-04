@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="endereco")
  * @ORM\Entity(repositoryClass="APP\UsuarioBundle\Repository\EnderecoRepository")
  */
-class Endereco
-{
+class Endereco {
+
     /**
      * @var int
      *
@@ -48,11 +48,27 @@ class Endereco
      * @ORM\Column(name="cep", type="string", length=8)
      */
     private $cep;
-     /**
+
+    /**
      * @ORM\OneToOne(targetEntity="Usuario", mappedBy="endereco")
      */
     private $usuario;
+
+    /**
+     * @ORM\OneToOne(targetEntity="APP\EmpresaBundle\Entity\Clientes", mappedBy="endereco")
+     */
+    private $cliente;
     
+    function getCliente() {
+        return $this->cliente;
+    }
+
+    function setCliente($cliente) {
+        $this->cliente = $cliente;
+    }
+
+        
+
     function getUsuario() {
         return $this->usuario;
     }
@@ -61,14 +77,12 @@ class Endereco
         $this->usuario = $usuario;
     }
 
-    
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -79,8 +93,7 @@ class Endereco
      *
      * @return Endereco
      */
-    public function setEndereco($endereco)
-    {
+    public function setEndereco($endereco) {
         $this->endereco = $endereco;
 
         return $this;
@@ -91,8 +104,7 @@ class Endereco
      *
      * @return string
      */
-    public function getEndereco()
-    {
+    public function getEndereco() {
         return $this->endereco;
     }
 
@@ -103,8 +115,7 @@ class Endereco
      *
      * @return Endereco
      */
-    public function setBairro($bairro)
-    {
+    public function setBairro($bairro) {
         $this->bairro = $bairro;
 
         return $this;
@@ -115,8 +126,7 @@ class Endereco
      *
      * @return string
      */
-    public function getBairro()
-    {
+    public function getBairro() {
         return $this->bairro;
     }
 
@@ -127,8 +137,7 @@ class Endereco
      *
      * @return Endereco
      */
-    public function setUf($uf)
-    {
+    public function setUf($uf) {
         $this->uf = $uf;
 
         return $this;
@@ -139,8 +148,7 @@ class Endereco
      *
      * @return string
      */
-    public function getUf()
-    {
+    public function getUf() {
         return $this->uf;
     }
 
@@ -151,8 +159,7 @@ class Endereco
      *
      * @return Endereco
      */
-    public function setCep($cep)
-    {
+    public function setCep($cep) {
         $this->cep = $cep;
 
         return $this;
@@ -163,9 +170,8 @@ class Endereco
      *
      * @return string
      */
-    public function getCep()
-    {
+    public function getCep() {
         return $this->cep;
     }
-}
 
+}

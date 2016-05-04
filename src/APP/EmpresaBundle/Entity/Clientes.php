@@ -36,9 +36,8 @@ class Clientes {
     private $email;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="endereco", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="APP\UsuarioBundle\Entity\Endereco", inversedBy="cliente")
+     * @ORM\JoinColumn(name="cliente_endereco_id", referencedColumnName="id")
      */
     private $endereco;
 
