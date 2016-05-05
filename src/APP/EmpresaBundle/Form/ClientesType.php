@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ClientesType extends AbstractType {
 
@@ -29,7 +30,15 @@ class ClientesType extends AbstractType {
                 ->add('cep', TextType::class, [
                     'mapped' => false
                 ])
-               
+                ->add('telefones', CollectionType::class, [
+                    'label' => FALSE,
+                    'mapped' => false,
+                    'entry_type' => TextType::class,
+                    'entry_options' => [
+                        
+                    ]
+                ])
+
         ;
     }
 

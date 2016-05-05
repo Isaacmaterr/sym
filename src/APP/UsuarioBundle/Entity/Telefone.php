@@ -42,6 +42,24 @@ class Telefone
     
     private $usuario;
     
+    
+    
+      /**
+     * @ORM\ManyToOne(targetEntity="APP\EmpresaBundle\Entity\Clientes", inversedBy="telefones")
+     * @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
+     */
+    
+    private $cliente;
+    function getCliente() {
+        return $this->cliente;
+    }
+
+    function setCliente($cliente) {
+        $this->cliente = $cliente;
+    }
+
+        
+    
     function getUsuario() {
         return $this->usuario;
     }

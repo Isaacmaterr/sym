@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use APP\EmpresaBundle\Entity\Clientes;
 use APP\UsuarioBundle\Entity\Endereco;
+use APP\UsuarioBundle\Entity\Telefone;
+
 use APP\EmpresaBundle\Form\ClientesType;
 
 /**

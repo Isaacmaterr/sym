@@ -2,7 +2,7 @@
 
 {% block body %}
 
-
+    <button id="teste"></button>
 
     <div class="portlet box green ">
         <div class="portlet-title">
@@ -31,9 +31,23 @@
                     <div class="col-md-9">
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class=" fa fa-plus" id="add"></i>
+                                <i class=" fa fa-plus" ></i>
                             </span>
                             {{form_row(form.email,{'label' : false, 'attr' : {'class' : 'form-control'}})}}
+                        </div>
+                    </div>
+                </div>
+             
+                <div class="form-group">
+                    <label class="col-md-3 control-label">telefone</label>
+
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="add">
+                                <i class=" fa fa-plus"></i>
+                            </span>
+                            <input type="text"  name="form[telefones][0]" class="form-control" />
+                            
                         </div>
                     </div>
                 </div>
@@ -101,6 +115,31 @@
             {{ form_end(form) }}
         </div>
     </div>
+      <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 
+
+    <script>
+        $(document).ready(function () {
+            i = 1;
+            $("#add").click(function () {
+                console.log(i);
+                $("#telefones").append($('<div/>', {class: 'form-group'}).append($('<label/>', {class: 'col-md-3 control-label', text: 'telefone'}),
+                        $('<div/>', {class: 'col-md-9'}).append($('<div/>', {class: 'input-group'}).append($('<span/>', {class: 'input-group-addon'})
+                        .append($('<i/>', {class: 'fa fa-plus'})
+                                )
+                        , $('<div/>', {}).append($('<input/>', {class: 'form-control', name: 'usuario[telefones][' + i + ']'}))
+                        )
+                        )
+                        )
+                        );
+                i++;
+            });
+        });
+
+$('#teste').click(function(){
+    
+    alert('teste');
+});
+    </script>
 {% endblock %}
 

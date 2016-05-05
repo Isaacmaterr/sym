@@ -53,6 +53,21 @@ class Clientes {
      */
     private $receitas;
     
+    
+     /**
+     * @ORM\OneToMany(targetEntity="APP\UsuarioBundle\Entity\Telefone", mappedBy="cliente")
+     */
+    private $telefones;
+    
+    function getTelefones() {
+        return $this->telefones;
+    }
+
+    function setTelefones($telefones) {
+        $this->telefones = $telefones;
+    }
+
+        
     function getEmpresar() {
         return $this->empresar;
     }
