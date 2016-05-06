@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Servicos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Descricao</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for servico in servicos %}
+            <tr>
+                <td><a href="{{ path('servicos_show', { 'id': servico.id }) }}">{{ servico.id }}</a></td>
+                <td>{{ servico.nome }}</td>
+                <td>{{ servico.descricao }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('servicos_show', { 'id': servico.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('servicos_edit', { 'id': servico.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('servicos_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

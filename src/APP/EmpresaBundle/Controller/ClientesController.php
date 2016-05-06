@@ -40,6 +40,7 @@ class ClientesController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+  
             $em = $this->getDoctrine()->getManager();
             $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
             $endereco = new Endereco();
@@ -53,6 +54,14 @@ class ClientesController extends Controller {
             $cliente->setEmpresar($empresar);
             $cliente->setEndereco($endereco);
             $em->persist($cliente);
+            
+            foreach($request->get("form")["telefones"] as $telefone){
+                $telefone = new Telefone();
+                $telefone->setNumero($telefone);
+                $telefone->setCliente($cliente);
+                $telefone->setWhatzap(1);
+            }
+            
             $em->flush();
 
             return $this->redirectToRoute('clientes_show', array('id' => $cliente->getId()));
