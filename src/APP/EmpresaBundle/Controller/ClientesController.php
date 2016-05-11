@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use APP\EmpresaBundle\Entity\Clientes;
 use APP\UsuarioBundle\Entity\Endereco;
-use APP\UsuarioBundle\Entity\Telefone;
+use APP\UsuarioBundle\Entity\Telefone ;
 
 use APP\EmpresaBundle\Form\ClientesType;
 
@@ -56,10 +56,14 @@ class ClientesController extends Controller {
             $em->persist($cliente);
             
             foreach($request->get("form")["telefones"] as $telefone){
-                $telefone = new Telefone();
-                $telefone->setNumero($telefone);
-                $telefone->setCliente($cliente);
-                $telefone->setWhatzap(1);
+             
+                   $telefoneSave = new Telefone();
+                    $telefoneSave->setNumero($telefone)
+                            ->setWhatzap(1)
+                            ->setCliente($cliente);
+
+               
+                $em->persist($telefoneSave);
             }
             
             $em->flush();
@@ -79,7 +83,7 @@ class ClientesController extends Controller {
      */
     public function showAction(Clientes $cliente) {
         $deleteForm = $this->createDeleteForm($cliente);
-
+      
         return $this->render('clientes/show.html.twig', array(
                     'cliente' => $cliente,
                     'delete_form' => $deleteForm->createView(),

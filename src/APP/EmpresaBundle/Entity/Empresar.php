@@ -76,6 +76,17 @@ class Empresar {
      */
     private $clientes;
     
+    
+    function getClientes() {
+        return $this->clientes;
+    }
+
+    function setClientes($clientes) {
+        $this->clientes = $clientes;
+    }
+
+        
+    
     function getServicos() {
         return $this->servicos;
     }
@@ -101,7 +112,7 @@ class Empresar {
     private $receitas;
 
     /**
-     * @ORM\OneToMany(targetEntity="Parcelas", mappedBy="empresa")
+     * @ORM\OneToMany(targetEntity="Parcelas", mappedBy="empresar")
      */
     private $parcelas;
 

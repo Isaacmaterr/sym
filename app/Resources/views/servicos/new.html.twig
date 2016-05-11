@@ -1,16 +1,68 @@
-{% extends 'base.html.twig' %}
+
+
+
+
+
+
+
+{% extends '/layout/usuario.html.twig' %}
+
+
+
 
 {% block body %}
-    <h1>Servicos creation</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('servicos_index') }}">Back to the list</a>
-        </li>
-    </ul>
+
+    <div class="portlet box green ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>Cadastrar categoria
+            </div>
+            {{ form_errors(form) }}
+
+        </div>
+        <div class="portlet-body form ">
+            {{ form_start(form, {'action': path('servicos_new'), 'method': 'post','attr': {'class': 'form-horizontal'}}) }}
+
+
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Nome</label>
+                    <div class="col-md-9">
+                        {{form_row(form.nome ,{ 'label' : false, 'attr' : {'class' : 'form-control'}})}}
+
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Descrição</label>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            {{form_row(form.descricao , { 'label' : false, 'attr' : { 'class' : 'form-control' }})}}
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </div>
+            </div>
+            {{form_rest(form)}}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
 {% endblock %}

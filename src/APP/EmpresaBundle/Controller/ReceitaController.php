@@ -20,9 +20,9 @@ class ReceitaController extends Controller {
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
+        $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+        $receitas = $em->getRepository('EmpresaBundle:Receita')->findBy(['empresa' => $empresar->getId()]);
 
-        $receitas = $em->getRepository('EmpresaBundle:Receita')->findAll();
-          
         return $this->render('receita/index.html.twig', array(
                     'receitas' => $receitas,
         ));
@@ -41,7 +41,7 @@ class ReceitaController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($receitum);
 
@@ -51,8 +51,8 @@ class ReceitaController extends Controller {
                         ->setValor($parcela['valor'])
                         ->setVencimento($parcela['vencimento'])
                         ->setEmpresa($empresar);
-                       $parc->setReceita($receitum);
-                
+                $parc->setReceita($receitum);
+
                 $em->persist($parc);
             }
 

@@ -81,6 +81,34 @@
                                     <span class="arrow open"></span>
                                 </a>
                             </li>
+                            
+                                 <li class="start {% if( params.Controle.1=='Servicos' and params.Action.1=='index' )
+                            %} active {% endif %}  ">
+                                <a href=" {{path('servicos_index')}}">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Servico</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
+                                 <li class="start {% if( params.Controle.1=='Clientes' and params.Action.1=='index' )
+                            %} active {% endif %}  ">
+                                <a href=" {{path('clientes_index')}}">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Clinetes</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
+                                 <li class="start {% if( params.Controle.1=='Receita' and params.Action.1=='index' )
+                            %} active {% endif %}  ">
+                                <a href=" {{path('receita_index')}}">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Lançamentos</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
 
                         </ul>
                         <!-- END SIDEBAR MENU -->

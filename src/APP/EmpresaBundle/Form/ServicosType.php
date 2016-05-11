@@ -16,9 +16,7 @@ class ServicosType extends AbstractType
     {
         $builder
             ->add('nome')
-            ->add('descricao')
-            ->add('empresar')
-        ;
+            ->add('descricao');
     }
     
     /**

@@ -1,45 +1,91 @@
-{% extends 'base.html.twig' %}
+
+
+
+
+{% extends '::/layout/usuario.html.twig' %}
+
 
 {% block body %}
-    <h1>Parcelas list</h1>
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Serviços
+                </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Numero</th>
-                <th>Status</th>
-                <th>Valor</th>
-                <th>Vencimento</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for parcela in parcelas %}
-            <tr>
-                <td><a href="{{ path('parcelas_show', { 'id': parcela.id }) }}">{{ parcela.id }}</a></td>
-                <td>{{ parcela.numero }}</td>
-                <td>{{ parcela.status }}</td>
-                <td>{{ parcela.valor }}</td>
-                <td>{% if parcela.vencimento %}{{ parcela.vencimento|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('parcelas_show', { 'id': parcela.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('parcelas_edit', { 'id': parcela.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <a id="sample_editable_1_new"  href="{{path('clientes_new')}}" class="btn green">
+                                    Nova transação <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
 
-    <ul>
-        <li>
-            <a href="{{ path('parcelas_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="table-scrollable"><table class="table table-striped table-hover table-bordered dataTable no-footer" id="sample_editable_1" role="grid" aria-describedby="sample_editable_1_info">
+                            <thead>
+                                <tr>
+                                    <th>Titulo</th>
+                                    <th>Numero</th>
+                                    <th>Status</th>
+                                    <th>Valor</th>
+                                    <th>Vencimento</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                {% for parcela in parcelas %}
+                                    <tr>
+                                        <td>{{ parcela.titulo }}</td>
+                                        <td>{{ parcela.valor }}</td>
+                                        <td>{{ parcela.numero }} de {{parcela.qtdParcela}}</td>
+                                        <td>{{ parcela.status }}</td>
+                                        <td>{{ parcela.valor }}</td>
+                                       <td>{% if parcela.vencimento %}{{ parcela.vencimento|date('Y-m-d H:i:s') }}{% endif %}</td>
+
+
+                                        <td>
+                                            <a href="{{ path('parcelas_edit', { 'id': parcela.id }) }}" class="btn default btn-xs purple">
+                                                <i class="fa fa-edit"></i> Edit </a>
+                                       <a href="{{ path('parcelas_show', { 'id': parcela.id }) }}" class="btn default btn-xs purple">
+                                                <i class="fa fa-edit"></i> show </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+
+
+
+
+
+
+                            </tbody>
+                        </table></div>
+                    <div class="row">
+                        <div class="col-md-5 col-sm-12">
+                            <div class="dataTables_info" id="sample_editable_1_info" role="status" aria-live="polite">
+                                Total : 
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-12">
+                            <div class="dataTables_paginate paging_simple_numbers" id="sample_editable_1_paginate">
+
+
+                            </div></div></div></div>
+            </div>
+        </div>
+
+    </div>                  
+
 {% endblock %}

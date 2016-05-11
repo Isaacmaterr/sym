@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="telefone")
  * @ORM\Entity(repositoryClass="APP\UsuarioBundle\Repository\TelefoneRepository")
  */
-class Telefone
-{
+class Telefone {
+
     /**
      * @var int
      *
@@ -34,22 +34,19 @@ class Telefone
      * @ORM\Column(name="whatzap", type="boolean")
      */
     private $whatzap;
-    
-     /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="telefones")
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
-    
     private $usuario;
-    
-    
-    
-      /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="APP\EmpresaBundle\Entity\Clientes", inversedBy="telefones")
      * @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
      */
-    
     private $cliente;
+
     function getCliente() {
         return $this->cliente;
     }
@@ -58,8 +55,6 @@ class Telefone
         $this->cliente = $cliente;
     }
 
-        
-    
     function getUsuario() {
         return $this->usuario;
     }
@@ -68,14 +63,12 @@ class Telefone
         $this->usuario = $usuario;
     }
 
-    
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -86,8 +79,7 @@ class Telefone
      *
      * @return Telefone
      */
-    public function setNumero($numero)
-    {
+    public function setNumero($numero) {
         $this->numero = $numero;
 
         return $this;
@@ -98,8 +90,7 @@ class Telefone
      *
      * @return string
      */
-    public function getNumero()
-    {
+    public function getNumero() {
         return $this->numero;
     }
 
@@ -110,8 +101,7 @@ class Telefone
      *
      * @return Telefone
      */
-    public function setWhatzap($whatzap)
-    {
+    public function setWhatzap($whatzap) {
         $this->whatzap = $whatzap;
 
         return $this;
@@ -122,9 +112,8 @@ class Telefone
      *
      * @return bool
      */
-    public function getWhatzap()
-    {
+    public function getWhatzap() {
         return $this->whatzap;
     }
-}
 
+}
