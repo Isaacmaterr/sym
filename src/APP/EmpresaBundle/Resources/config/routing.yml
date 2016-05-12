@@ -28,4 +28,6 @@ empresa_parcelas:
         prefix:   /parcelas        
         
         
-        
+empresa_servicos:
+        resource: "@EmpresaBundle/Resources/config/routing/servicos.yml"
+        prefix:   /servicos        

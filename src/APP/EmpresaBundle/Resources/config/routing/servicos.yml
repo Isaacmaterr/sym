@@ -1,0 +1,24 @@
+servicos_index:
+    path:     /
+    defaults: { _controller: "EmpresaBundle:Servicos:index" }
+    methods:  GET
+
+servicos_show:
+    path:     /{id}/show
+    defaults: { _controller: "EmpresaBundle:Servicos:show" }
+    methods:  GET
+
+servicos_new:
+    path:     /new
+    defaults: { _controller: "EmpresaBundle:Servicos:new" }
+    methods:  [GET, POST]
+
+servicos_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EmpresaBundle:Servicos:edit" }
+    methods:  [GET, POST]
+
+servicos_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EmpresaBundle:Servicos:delete" }
+    methods:  DELETE

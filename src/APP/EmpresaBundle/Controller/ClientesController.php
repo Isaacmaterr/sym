@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use APP\EmpresaBundle\Entity\Clientes;
 use APP\UsuarioBundle\Entity\Endereco;
+use APP\UsuarioBundle\Entity\Telefone ;
+
 use APP\EmpresaBundle\Form\ClientesType;
 
 /**
@@ -38,6 +40,7 @@ class ClientesController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+  
             $em = $this->getDoctrine()->getManager();
             $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
             $endereco = new Endereco();
@@ -51,6 +54,18 @@ class ClientesController extends Controller {
             $cliente->setEmpresar($empresar);
             $cliente->setEndereco($endereco);
             $em->persist($cliente);
+            
+            foreach($request->get("form")["telefones"] as $telefone){
+             
+                   $telefoneSave = new Telefone();
+                    $telefoneSave->setNumero($telefone)
+                            ->setWhatzap(1)
+                            ->setCliente($cliente);
+
+               
+                $em->persist($telefoneSave);
+            }
+            
             $em->flush();
 
             return $this->redirectToRoute('clientes_show', array('id' => $cliente->getId()));
@@ -68,7 +83,7 @@ class ClientesController extends Controller {
      */
     public function showAction(Clientes $cliente) {
         $deleteForm = $this->createDeleteForm($cliente);
-
+      
         return $this->render('clientes/show.html.twig', array(
                     'cliente' => $cliente,
                     'delete_form' => $deleteForm->createView(),

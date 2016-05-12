@@ -4,7 +4,6 @@ namespace APP\EmpresaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use APP\EmpresaBundle\Entity\Parcelas;
 use APP\EmpresaBundle\Form\ParcelasType;
 
@@ -12,20 +11,28 @@ use APP\EmpresaBundle\Form\ParcelasType;
  * Parcelas controller.
  *
  */
-class ParcelasController extends Controller
-{
+class ParcelasController extends Controller {
+
     /**
      * Lists all Parcelas entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-
-        $parcelas = $em->getRepository('EmpresaBundle:Parcelas')->findAll();
+        $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+        $parcelas = $em->getRepository('EmpresaBundle:Parcelas')->findBy(['empresa' => $empresar->getId()]);
+        $qb = $em->createQueryBuilder('u');
+        $qb->select(['parcela.id,parcela.numero,parcela.valor,parcela.status,parcela.vencimento,b.titulo,b.tipo,b.qtdParcela']);
+        $qb->add('from',['EmpresaBundle:Parcelas parcela']);
+        $qb->join('parcela.receita', 'b');
+        $qb->where($qb->expr()->eq('parcela.empresa',':empresa'));
+        $qb->setParameter('empresa', $empresar);
+        $resultado = $qb->getQuery()->getResult();
+        var_dump($resultado);
+        
 
         return $this->render('parcelas/index.html.twig', array(
-            'parcelas' => $parcelas,
+                    'parcelas' => $resultado,
         ));
     }
 
@@ -33,8 +40,7 @@ class ParcelasController extends Controller
      * Creates a new Parcelas entity.
      *
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request) {
         $parcela = new Parcelas();
         $form = $this->createForm('APP\EmpresaBundle\Form\ParcelasType', $parcela);
         $form->handleRequest($request);
@@ -48,8 +54,8 @@ class ParcelasController extends Controller
         }
 
         return $this->render('parcelas/new.html.twig', array(
-            'parcela' => $parcela,
-            'form' => $form->createView(),
+                    'parcela' => $parcela,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -57,13 +63,12 @@ class ParcelasController extends Controller
      * Finds and displays a Parcelas entity.
      *
      */
-    public function showAction(Parcelas $parcela)
-    {
+    public function showAction(Parcelas $parcela) {
         $deleteForm = $this->createDeleteForm($parcela);
 
         return $this->render('parcelas/show.html.twig', array(
-            'parcela' => $parcela,
-            'delete_form' => $deleteForm->createView(),
+                    'parcela' => $parcela,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -71,8 +76,7 @@ class ParcelasController extends Controller
      * Displays a form to edit an existing Parcelas entity.
      *
      */
-    public function editAction(Request $request, Parcelas $parcela)
-    {
+    public function editAction(Request $request, Parcelas $parcela) {
         $deleteForm = $this->createDeleteForm($parcela);
         $editForm = $this->createForm('APP\EmpresaBundle\Form\ParcelasType', $parcela);
         $editForm->handleRequest($request);
@@ -86,9 +90,9 @@ class ParcelasController extends Controller
         }
 
         return $this->render('parcelas/edit.html.twig', array(
-            'parcela' => $parcela,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'parcela' => $parcela,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -96,8 +100,7 @@ class ParcelasController extends Controller
      * Deletes a Parcelas entity.
      *
      */
-    public function deleteAction(Request $request, Parcelas $parcela)
-    {
+    public function deleteAction(Request $request, Parcelas $parcela) {
         $form = $this->createDeleteForm($parcela);
         $form->handleRequest($request);
 
@@ -117,12 +120,12 @@ class ParcelasController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Parcelas $parcela)
-    {
+    private function createDeleteForm(Parcelas $parcela) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('parcelas_delete', array('id' => $parcela->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
+                        ->setAction($this->generateUrl('parcelas_delete', array('id' => $parcela->getId())))
+                        ->setMethod('DELETE')
+                        ->getForm()
         ;
     }
+
 }
