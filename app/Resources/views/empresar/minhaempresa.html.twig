@@ -6,7 +6,7 @@
 {% block body %}
 
 {{ app.session.get('security.token_storage') }}
-{{ app.user.empresa.logo.arquivo }} 
+ 
 
 <!--{{ path(app.request.attributes.get('_route'),
          app.request.attributes.get('_route_params')) }}-->
@@ -71,7 +71,7 @@
                     <div class="col-md-9">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-                                {% if(empresar.logo is defined)%}
+                                {% if(empresar.logo.arquivo is defined)%}
                                     <img  src="{{asset('uploads/logos/'~empresar.logo.arquivo)}}" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;"> 
                                 {% endif %}
                                 </div>
