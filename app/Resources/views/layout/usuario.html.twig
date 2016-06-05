@@ -109,6 +109,16 @@
                                     <span class="arrow open"></span>
                                 </a>
                             </li>
+                            
+                                 <li class="start {% if( params.Controle.1=='Parcelas' and params.Action.1=='index' )
+                            %} active {% endif %}  ">
+                                <a href=" {{path('parcelas_index')}}">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Controle de gastos e saldo</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
 
                         </ul>
                         <!-- END SIDEBAR MENU -->

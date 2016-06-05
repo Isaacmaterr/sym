@@ -1,7 +1,7 @@
 parcelas_index:
     path:     /
     defaults: { _controller: "EmpresaBundle:Parcelas:index" }
-    methods:  GET
+    methods:  [GET,POST]
 
 parcelas_show:
     path:     /{id}/show

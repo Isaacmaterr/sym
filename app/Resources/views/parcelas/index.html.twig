@@ -19,6 +19,36 @@
                 <div class="table-toolbar">
                     <div class="row">
                         <div class="col-md-6">
+                            <div class="portlet-body">
+                                <h4>Buscar minhas parcelas</h4>
+                                {{ form_start(form, {'action': path('parcelas_index'), 'method': 'post','attr': {'class': 'form-inline'}}) }}
+
+                                <div class="form-group">
+                                    <label class="sr-only" for="exampleInputEmail2">De</label>
+                                    {{form_row(form.de , { 'label' : false, 'attr' : { 'class' : 'form-control' ,'placeholder':'de'}})}}
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="exampleInputEmail2">Ate</label>
+                                    {{form_row(form.ate , { 'label' : false, 'attr' : { 'class' : 'form-control','placeholder':'ate' }})}}
+
+                                </div>
+
+                                <div class="btn-group">
+                                    
+                                    <button id="sample_editable_1_new"  type='submit' class="btn green">
+                                       Buscar <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+
+                                {{form_rest(form)}}
+                                {{ form_end(form) }}
+                                <hr>
+
+
+
+                            </div>
+
                             <div class="btn-group">
                                 <a id="sample_editable_1_new"  href="{{path('clientes_new')}}" class="btn green">
                                     Nova transação <i class="fa fa-plus"></i>
@@ -36,8 +66,9 @@
                                 <tr>
                                     <th>Titulo</th>
                                     <th>Numero</th>
-                                    <th>Status</th>
                                     <th>Valor</th>
+                                    <th>Status</th>
+
                                     <th>Vencimento</th>
                                     <th>Ação</th>
                                 </tr>
@@ -48,17 +79,17 @@
                                 {% for parcela in parcelas %}
                                     <tr>
                                         <td>{{ parcela.titulo }}</td>
-                                        <td>{{ parcela.valor }}</td>
                                         <td>{{ parcela.numero }} de {{parcela.qtdParcela}}</td>
-                                        <td>{{ parcela.status }}</td>
                                         <td>{{ parcela.valor }}</td>
-                                       <td>{% if parcela.vencimento %}{{ parcela.vencimento|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                        <td>{{ parcela.status }}</td>
+
+                                        <td>{% if parcela.vencimento %}{{ parcela.vencimento|date('Y-m-d H:i:s') }}{% endif %}</td>
 
 
                                         <td>
                                             <a href="{{ path('parcelas_edit', { 'id': parcela.id }) }}" class="btn default btn-xs purple">
                                                 <i class="fa fa-edit"></i> Edit </a>
-                                       <a href="{{ path('parcelas_show', { 'id': parcela.id }) }}" class="btn default btn-xs purple">
+                                            <a href="{{ path('parcelas_show', { 'id': parcela.id }) }}" class="btn default btn-xs purple">
                                                 <i class="fa fa-edit"></i> show </a>
                                         </td>
                                     </tr>

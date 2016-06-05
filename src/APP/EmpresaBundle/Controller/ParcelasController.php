@@ -17,22 +17,24 @@ class ParcelasController extends Controller {
      * Lists all Parcelas entities.
      *
      */
-    public function indexAction() {
+    public function indexAction(Request $request) {
+         $form = $this->createForm('APP\EmpresaBundle\Form\BuscarparcelaType',[]);
+         $form->handleRequest($request);
+        
         $em = $this->getDoctrine()->getManager();
         $empresar = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
-        $parcelas = $em->getRepository('EmpresaBundle:Parcelas')->findBy(['empresa' => $empresar->getId()]);
-        $qb = $em->createQueryBuilder('u');
-        $qb->select(['parcela.id,parcela.numero,parcela.valor,parcela.status,parcela.vencimento,b.titulo,b.tipo,b.qtdParcela']);
-        $qb->add('from',['EmpresaBundle:Parcelas parcela']);
-        $qb->join('parcela.receita', 'b');
-        $qb->where($qb->expr()->eq('parcela.empresa',':empresa'));
-        $qb->setParameter('empresa', $empresar);
-        $resultado = $qb->getQuery()->getResult();
-        var_dump($resultado);
+        $parcelas = $em->getRepository('EmpresaBundle:Parcelas')->parcelaslist(['empresa' => $empresar->getId()]);
+      
+        if($form->isSubmitted() && $form->isValid()){
+            var_dump($form->getData());
+            exit();
+        }
         
-
+       
         return $this->render('parcelas/index.html.twig', array(
-                    'parcelas' => $resultado,
+                    'parcelas' => $parcelas,
+                    'form' => $form->createView(),
+            
         ));
     }
 
