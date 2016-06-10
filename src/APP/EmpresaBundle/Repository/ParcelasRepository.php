@@ -10,4 +10,13 @@ namespace APP\EmpresaBundle\Repository;
  */
 class ParcelasRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function parcelaslist(array $data) {
+        $qb = $this->createQueryBuilder('u');
+        $qb->select(['parcela.id,parcela.numero,parcela.valor,parcela.status,parcela.vencimento,b.titulo,b.tipo,b.qtdParcela']);
+        $qb->add('from',['EmpresaBundle:Parcelas parcela']);
+        $qb->join('parcela.receita', 'b');
+        $qb->where($qb->expr()->eq('parcela.empresa',':empresa'));
+        $qb->setParameter('empresa', $data['empresa']);
+        return $qb->getQuery()->getResult() ;
+    }
 }
