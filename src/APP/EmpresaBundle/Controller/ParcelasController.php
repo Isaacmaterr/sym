@@ -27,6 +27,8 @@ class ParcelasController extends Controller {
       
         if($form->isSubmitted() && $form->isValid()){
             var_dump($form->getData());
+            
+            var_dump($em->getRepository('EmpresaBundle:Parcelas')->parcelasfiltro(['empresa' => $empresar->getId()]));
             exit();
         }
         

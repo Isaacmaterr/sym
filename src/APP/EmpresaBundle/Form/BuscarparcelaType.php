@@ -5,6 +5,8 @@ namespace APP\EmpresaBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 class BuscarparcelaType extends AbstractType
 {
@@ -14,8 +16,8 @@ class BuscarparcelaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('de');
-        $builder->add('ate');
+        $builder->add('de', TextType::class,['required'=>true,'empty_data'  => false]);
+        $builder->add('ate',TextType::class,['required'=>true,'empty_data'  => false]);
     }
     
     /**

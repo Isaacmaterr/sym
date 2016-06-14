@@ -1,6 +1,4 @@
-<?php
-
-namespace APP\EmpresaBundle\Repository;
+<?php namespace APP\EmpresaBundle\Repository;
 
 /**
  * ParcelasRepository
@@ -10,13 +8,29 @@ namespace APP\EmpresaBundle\Repository;
  */
 class ParcelasRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function parcelaslist(array $data) {
+
+    public function parcelaslist(array $data)
+    {
         $qb = $this->createQueryBuilder('u');
         $qb->select(['parcela.id,parcela.numero,parcela.valor,parcela.status,parcela.vencimento,b.titulo,b.tipo,b.qtdParcela']);
-        $qb->add('from',['EmpresaBundle:Parcelas parcela']);
+        $qb->add('from', ['EmpresaBundle:Parcelas parcela']);
         $qb->join('parcela.receita', 'b');
-        $qb->where($qb->expr()->eq('parcela.empresa',':empresa'));
+        $qb->where($qb->expr()->eq('parcela.empresa', ':empresa'));
         $qb->setParameter('empresa', $data['empresa']);
-        return $qb->getQuery()->getResult() ;
+        return $qb->getQuery()->getResult();
+    }
+
+    public function parcelasfiltro(array $data = null)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->select(['parcela.id,parcela.numero,parcela.valor,parcela.status,parcela.vencimento,b.titulo,b.tipo,b.qtdParcela']);
+        $qb->add('from', ['EmpresaBundle:Parcelas parcela']);
+        $qb->join('parcela.receita', 'b');
+        $qb->add('where', $qb->expr()->between(
+                    'parcela.vencimento', ':from', ':to'
+                )
+            );
+        $qb->setParameters(array('from' => '2016-06-14 14:51:34', 'to' => '2016-06-15 14:51:34'));
+        return $qb->getQuery()->getResult();
     }
 }
